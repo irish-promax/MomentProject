@@ -10,7 +10,7 @@ const Header = ({title, onBackPress, onLogout, showLogout, showSpace}) => {
         {
           onBackPress ? (
             <Pressable hitSlop={20} onPress={onLogout}>
-                <Image style = {styles.icon} source = {require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/bookmark.png') } />
+                <Image style = {styles.icon} source = {require('../../../../MomentProject/src/assets/bookmark.png') } />
             </Pressable>
           )
           : 
@@ -23,7 +23,7 @@ const Header = ({title, onBackPress, onLogout, showLogout, showSpace}) => {
         {
           showLogout ? (
             <Pressable hitSlop={20} onPress={onLogout}>
-                <Image style = {styles.icon} source = {require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/house.png') } />
+                <Image style = {styles.icon} source = {require('../../../../MomentProject/src/assets/house.png') } />
             </Pressable>
           )
           : 

@@ -20,27 +20,27 @@ const LogBuddy = ({ navigation }) => {
         {
             label: 'Alex',
             value: 'Alex',
-            image: '/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p2.png'
+            image: '../../../../../MomentProject/src/assets/p2.png'
         },
         {
             label: 'Meredith',
             value: 'Meredith',
-            image: '/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p2.png'
+            image: '../../../../../MomentProject/src/assets/p2.png'
         },
         {
             label: 'Cristina',
             value: 'Cristina',
-            image: '/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p2.png'
+            image: '../../../../../MomentProject/src/assets/p2.png'
         },
         {
             label: 'Izzie',
             value: 'Izzie',
-            image: '/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p2.png'
+            image: '../../../../../MomentProject/src/assets/p2.png'
         },
         {
             label: 'George',
             value: 'George',
-            image: '/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p2.png'
+            image: '../../../../../MomentProject/src/assets/p2.png'
         },
     ];
 
@@ -77,27 +77,27 @@ const LogBuddy = ({ navigation }) => {
                         case 'Alex':
                             return <Image
                                 style={styles.gambar}
-                                source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p5.png')}
+                                source={require('../../../../../MomentProject/src/assets/p5.png')}
                             />
                         case 'Meredith':
                             return <Image
                                 style={styles.gambar}
-                                source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p1.png')}
+                                source={require('../../../../../MomentProject/src/assets/p1.png')}
                             />
                         case 'Cristina':
                             return <Image
                                 style={styles.gambar}
-                                source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p4.png')}
+                                source={require('../../../../../MomentProject/src/assets/p4.png')}
                             />
                         case 'Izzie':
                             return <Image
                                 style={styles.gambar}
-                                source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p2.png')}
+                                source={require('../../../../../MomentProject/src/assets/p2.png')}
                             />
                         case 'George':
                             return <Image
                                 style={styles.gambar}
-                                source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p3.png')}
+                                source={require('../../../../../MomentProject/src/assets/p3.png')}
                             />
                         default:
                             return null

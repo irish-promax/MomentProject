@@ -90,7 +90,7 @@ const logCollection = () => {
 
                         <Image
                             style={{ marginTop: 20, width: 180, height: 180, resizeMode: 'contain', }}
-                            source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/collection2.png')}
+                            source={require('../../../../../MomentProject/src/assets/collection2.png')}
                         />
                         <ActivityIndicator size="large" color={colors.white} />
                         <Text style={{ color: colors.white, marginTop: 10 }}>Fetching collection...</Text>

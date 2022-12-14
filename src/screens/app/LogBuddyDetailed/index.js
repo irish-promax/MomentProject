@@ -95,7 +95,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
 
                         <Image
                             style={{ marginTop: 30, width: 180, height: 180, resizeMode: 'contain', }}
-                            source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/people3.png')}
+                            source={require('../../../../../MomentProject/src/assets/people3.png')}
                         />
                         <ActivityIndicator size="large" color={colors.white} />
                         <Text style={{ color: colors.white, marginTop: 10 }}>Loading content...</Text>
@@ -108,28 +108,28 @@ const logBuddyDetailed = ({ navigation, route }) => {
                                 case 'Alex':
                                     return <Image
                                         style={styles.gambar}
-                                        source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p5.png')}
+                                        source={require('../../../../../MomentProject/src/assets/p5.png')}
                                     />
 
                                 case 'Meredith':
                                     return <Image
                                         style={styles.gambar}
-                                        source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p1.png')}
+                                        source={require('../../../../../MomentProject/src/assets/p1.png')}
                                     />
                                 case 'Cristina':
                                     return <Image
                                         style={styles.gambar}
-                                        source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p4.png')}
+                                        source={require('../../../../../MomentProject/src/assets/p4.png')}
                                     />
                                 case 'Izzie':
                                     return <Image
                                         style={styles.gambar}
-                                        source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p2.png')}
+                                        source={require('../../../../../MomentProject/src/assets/p2.png')}
                                     />
                                 case 'George':
                                     return <Image
                                         style={styles.gambar}
-                                        source={require('/Users/imanirishdaniel/Desktop/MomentProject/src/assets/p3.png')}
+                                        source={require('../../../../../MomentProject/src/assets/p3.png')}
                                     />
                                 default:
                                     return null
