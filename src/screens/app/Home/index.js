@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Pressable, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Pressable, ScrollView, Dimensions, ActivityIndicator, Button } from 'react-native';
 import { styles } from './styles';
 import { authentication, db } from '../../../../firebase-config/firebase';
 import { signOut } from "firebase/auth";
@@ -7,9 +7,22 @@ import { SFSymbol } from "react-native-sfsymbols";
 import { LineChart } from "react-native-chart-kit";
 import { colors } from '../../../utils/colors';
 import { collection, query, doc, onSnapshot, where } from "firebase/firestore";
+import RadioButton from '../../../components/RadioButton';
+import SButton1 from '../../../components/SButton';
+
 
 const Home = ({ navigation }) => {
 
+    const [option, setOption] = useState('');
+
+    const mood = [
+        { value: '🥳' },
+        { value: '🙁' },
+        { value: '🥱' },
+        { value: '😡' },
+        { value: '😰' },
+        { value: '😲' },
+    ];
     const toDiary = () => {
         navigation.navigate('Diary')
     }
@@ -41,6 +54,46 @@ const Home = ({ navigation }) => {
             })
     }
 
+    const sendToDB = async () => {
+        try {
+            //Get Current Date
+            var fullDate = new Date();
+
+            //Get Current Date
+            var date = new Date().getDate();
+
+            //Get Current Month
+            var month = new Date().getMonth() + 1;
+
+            //Get Current Year
+            var year = new Date().getFullYear();
+
+            //Get Current Time Hours
+            var hours = new Date().getHours();
+
+            //Get Current Time Minutes
+            var min = new Date().getMinutes();
+
+            const docRef1 = doc(db, "User", authentication.currentUser.uid,)
+            const colRef1 = collection(docRef1, "Mood")
+            addDoc(colRef1, {
+                userID: authentication.currentUser.uid,
+                moodLog: option,
+                fDate: fullDate,
+                createdAt: serverTimestamp(),
+                dateLog: date,
+                monthLog: month,
+                yearLog: year,
+            });
+
+            console.log("Document written with ID: ", docRef.id);
+            console.log("Log Sucessful: ", hours, ":", min);
+            navigation.navigate("logC");
+        }
+        catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
 
     //labels: ["🥳", "🙁", "🥱", "😡", "😰", "😲"]
 
@@ -129,8 +182,41 @@ const Home = ({ navigation }) => {
                 </View>
             </View>
 
+            <View style={{ marginTop: 30, paddingHorizontal: 10 }}>
+                <Text style={{
+                    fontSize: 16,
+                    paddingHorizontal: 10,
+                    fontWeight: "bold",
+                    color: colors.white,
+                    justifyContent: "space-evenly",
+                    marginBottom: 10
+                }}>How are you feeling today? </Text>
+                <View style={{
+                    padding: 0,
+                    backgroundColor: "#324A5F",
+                    borderRadius: 30,
+                    marginBottom: 15,
+                    height: 60,
+                    width: "98%",
+                    justifyContent: "center",
+                    alignSelf: "center"
+                }}>
+                    <View style={{
+                        fontSize: 20,
+                        alignSelf: "center",
+                        color: colors.white,
+                        justifyContent: "space-evenly",
+                    }}>
+                        <RadioButton data={mood} onSelect={(value) => setOption(value)} onChangeText={option => setOption(option)} />
+                    </View>
+                </View>
+
+                <Button title='Save' onPress={sendToDB} />
+            </View>
+
             <View style={styles.container1}>
                 <View style={{ flexDirection: "row", alignSelf: "center" }}>
+
                     {/* Diary button @ Home */}
                     <Pressable onPress={toDiary} style={styles.container3} hitSlop={20}>
                         <SFSymbol
@@ -205,7 +291,7 @@ const Home = ({ navigation }) => {
 
                     :
 
-                    <View style={{width: Dimensions.get('screen').width, backgroundColor: "#FBAF00", borderRadius: 40, marginTop: 20, paddingTop: 20 }}>
+                    <View style={{ width: Dimensions.get('screen').width, backgroundColor: "#FBAF00", borderRadius: 40, marginTop: 20, paddingTop: 20 }}>
 
                         <Text style={styles.SHtitle}>Mood Tracker</Text>
 
@@ -429,57 +515,3 @@ const Home = ({ navigation }) => {
 }
 
 export default React.memo(Home);
-
-
-/* =========== Reserved Code ===========
-
-
-                        <View style={{marginTop:"5%", flexDirection:"row", alignSelf:"center" }}>
-                            <Button3 onPress={toDiary} title="Diary"/>
-                            <Button3 onPress={toCal} title="Calendar" />
-                        </View>
-                        
-                        <View style={{marginTop:"5%", flexDirection:"row", alignSelf:"center"}}>
-                            <Button3  onPress={toVB} title="Virtual Buddy"/>
-                            <Button3  title="Log Idea"/>
-                        </View>
-
-                        <Button2 onPress={toCollection} title="Collection" style={{ marginTop: 30, height:70, width:310, alignSelf:"center", fontSize:20, fontWeight:'bold',color: colors.blue,}} />
-                    
-
-                        <Image style = {{width:20,height:30}} source = {require('/Users/imanirishdaniel-dev/Desktop/MomentProject/src/assets/bookmark.fill.png') } />
-                        <Image style = {{width:27,height:36}} source = {require('/Users/imanirishdaniel-dev/Desktop/MomentProject/src/assets/magazine.png') } />
-
-
-
-                           let [isLoading, setIsLoading] = React.useState(true);
-    
-    const [name,setName] = useState('');
-    if(isLoading){
-        getDoc(doc(db,"User", authentication.currentUser.uid)).then(docData =>{
-            if (docData.exists()) {
-                //console.log("Document data:", docData.data());
-
-                setName(docData.data().FullName);
-                
-                setIsLoading(false);
-              } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-              }
-        })
-
-
-
-            <View style={{flexDirection:"row", alignContent:"center", alignItems:"center", alignSelf:"center"}}>
-                {
-                        isLoading? <ActivityIndicator  color={colors.white}/> : 
-                        <Text style={styles.Htitle}>Hello, {name}</Text>
-                }
-            </View>
-
-
-
-
-            
-*/

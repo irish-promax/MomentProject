@@ -119,7 +119,6 @@ const LogDiary = ({ navigation }) => {
         { value: '😡' },
         { value: '😰' },
         { value: '😲' },
-
     ];
 
     const toLogCol = () => {
