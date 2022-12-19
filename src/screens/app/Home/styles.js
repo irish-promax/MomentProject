@@ -4,7 +4,7 @@ import { colors } from "../../../utils/colors";
 export const styles = StyleSheet.create({
 
     container: {
-        padding: 15,
+        padding: 10,
         marginBottom: 40,
         marginTop: 40,
     },
@@ -16,12 +16,12 @@ export const styles = StyleSheet.create({
     container1: {
         //borderWidth:2,
         backgroundColor: "#779CAB",
-        borderRadius: 40,
+        borderRadius: 30,
         width: Dimensions.get('screen').width,
         alignSelf: "center",
         alignContent: "center",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 30,
         paddingTop: 5,
 
     },
@@ -126,7 +126,6 @@ export const styles = StyleSheet.create({
     SHtitle3: {
         fontSize: 24,
         alignSelf: "center",
-        marginLeft:20,
         marginTop: 5,
         color: colors.white,
         fontWeight: "bold"

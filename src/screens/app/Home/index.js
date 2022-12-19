@@ -189,7 +189,7 @@ const Home = ({ navigation }) => {
                 <View style={{ marginTop: 20 }}>
                     <Text style={{
                         fontSize: 16,
-                        paddingHorizontal: 10,
+                        paddingHorizontal: 8,
                         fontWeight: "bold",
                         color: colors.white,
                         justifyContent: "space-evenly",
@@ -200,8 +200,8 @@ const Home = ({ navigation }) => {
                         backgroundColor: "#324A5F",
                         borderRadius: 30,
                         marginBottom: 10,
-                        height: 60,
-                        width: "98%",
+                        height: 70,
+                        width: 350,
                         justifyContent: "center",
                         alignSelf: "center"
                     }}>
@@ -307,9 +307,10 @@ const Home = ({ navigation }) => {
                     <View style={{ width: Dimensions.get('screen').width, backgroundColor: "#FBAF00", borderRadius: 40, marginTop: 20, paddingTop: 20 }}>
                         <Text style={styles.SHtitle}>Mood Tracker</Text>
 
-                        <View style={{ flexDirection: "row" }}>
-                            <View style={{ marginTop: 10 }}>
-                                <Text style={{ fontSize: 16, color: colors.white, marginLeft: 20 }}>As of:</Text>
+                        <View style={{ borderRadius: 30, paddingBottom: 50, alignSelf: "center", alignItems: "center", alignContent: "center", backgroundColor: "#243E36", marginTop: 20 }}>
+                            <Text style={{ marginTop: 35, fontSize: 16, color: colors.white, }}>As of:</Text>
+                            <View style={{ marginTop: 5 }}>
+
                                 {(() => {
                                     if (month == 1) {
                                         return (
@@ -408,52 +409,53 @@ const Home = ({ navigation }) => {
                                     }
                                 })()}
                             </View>
-                        </View>
 
-                        <LineChart
-                            data={{
-                                labels: ["🥳", "🙁", "🥱", "😡", "😰", "😲"],
-                                datasets: [
-                                    {
-                                        data: [
-                                            isHappy,
-                                            isSad,
-                                            isBoring,
-                                            isMad,
-                                            isWorry,
-                                            isShock
-                                        ]
+
+                            <LineChart
+                                data={{
+                                    labels: ["🥳", "🙁", "🥱", "😡", "😰", "😲"],
+                                    datasets: [
+                                        {
+                                            data: [
+                                                isHappy,
+                                                isSad,
+                                                isBoring,
+                                                isMad,
+                                                isWorry,
+                                                isShock
+                                            ]
+                                        }
+                                    ],
+                                }}
+                                width={340} // from react-native
+                                height={250}
+                                yAxisInterval={1} // optional, defaults to 1
+
+                                chartConfig={{
+                                    backgroundColor: colors.white,
+                                    backgroundGradientFrom: colors.blue,
+                                    backgroundGradientTo: colors.blue,
+                                    decimalPlaces: 1, // optional, defaults to 2dp
+                                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                    propsForDots: {
+                                        r: "4",
+                                        strokeWidth: "4",
+                                        stroke: "white"
                                     }
-                                ],
-                            }}
-                            width={340} // from react-native
-                            height={250}
-                            yAxisInterval={1} // optional, defaults to 1
-
-                            chartConfig={{
-                                backgroundColor: colors.white,
-                                backgroundGradientFrom: colors.blue,
-                                backgroundGradientTo: colors.blue,
-                                decimalPlaces: 1, // optional, defaults to 2dp
-                                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                propsForDots: {
-                                    r: "4",
-                                    strokeWidth: "4",
-                                    stroke: "white"
-                                }
-                            }}
-                            bezier
-                            style={{
+                                }}
+                                bezier
+                                style={{
 
 
-                                borderRadius: 10,
-                                padding: 5, alignSelf: "center",
-                                alignContent: "center",
-                                alignItems: "center",
+                                    borderRadius: 10,
+                                    padding: 5, alignSelf: "center",
+                                    alignContent: "center",
+                                    alignItems: "center",
 
-                            }}
-                        />
+                                }}
+                            />
+                        </View>
 
                         <View style={{ marginTop: 10, marginBottom: 5 }}>
                             {(() => {
@@ -468,17 +470,22 @@ const Home = ({ navigation }) => {
                                 else {
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isHappy) {
                                         return (
-                                            <View>
+
+
+                                            <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>You have been happy this month</Text>
+                                                <Text style={styles.title}>OR</Text>
+                                                <LinkPreview style={{ color: colors.blue }} text='https://www.lifehack.org/articles/money/30-absolutely-free-activities-that-can-make-you-happy-today.html' />
                                             </View>
+
                                         )
                                     }
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isSad) {
                                         return (
-                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
-                                            <Text style={styles.title}>You went through a lot of sadness this month. You should find something fun!</Text>
-                                            <Text style={styles.title}>OR</Text>
+                                            <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
+                                                <Text style={styles.title}>You went through a lot of sadness this month. You should find something fun!</Text>
+                                                <Text style={styles.title}>OR</Text>
                                                 <Text style={styles.title}>You may use this test for further help:</Text>
                                                 <LinkPreview style={{ color: colors.blue }} text='https://www.ramlimusa.com/questionnaires/depression-anxiety-stress-scale-dass-21-bahasa-malaysia/' />
                                             </View>
@@ -487,7 +494,7 @@ const Home = ({ navigation }) => {
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isBoring) {
                                         return (
-                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
+                                            <View style={{ bbackgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>You went through a lot of boringness this month. You should find something fun!</Text>
                                                 <Text style={styles.title}>OR</Text>
                                                 <Text style={styles.title}>For further help:</Text>
@@ -498,8 +505,8 @@ const Home = ({ navigation }) => {
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isMad) {
                                         return (
-                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
-                                                <Text style={styles.title}>You went through a lot of boringness this month. You should find something fun!</Text>
+                                            <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
+                                                <Text style={styles.title}>You went through a lot this month. You should find something fun to overcome!</Text>
                                                 <Text style={styles.title}>OR</Text>
                                                 <Text style={styles.title}>For further help:</Text>
                                                 <LinkPreview style={{ color: colors.blue }} text='https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/anger-management/art-20045434' />
@@ -509,7 +516,7 @@ const Home = ({ navigation }) => {
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isWorry) {
                                         return (
-                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
+                                            <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>What makes you worry? Go dump all you worries with your V-Buddy!!</Text>
                                                 <Text style={styles.title}>OR</Text>
                                                 <Text style={styles.title}>You may use this test for further help:</Text>
@@ -520,7 +527,7 @@ const Home = ({ navigation }) => {
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isShock) {
                                         return (
-                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
+                                            <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>What makes you shocked a lot? Go dump all you shockness with your V-Buddy!</Text>
                                                 <Text style={styles.title}>OR</Text>
                                                 <Text style={styles.title}>You may use this test for further help:</Text>
