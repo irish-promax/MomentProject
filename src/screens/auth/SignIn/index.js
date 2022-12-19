@@ -29,7 +29,11 @@ const SignIn = ({ navigation }) => {
             })
             .catch((re) => {
                 console.log(re);
-                setValidatePassword('Invalid Credential')
+                setEmail('');
+                setPass('');
+                setValidatePassword('')
+                
+                alert("Invalid Credential!");
             })
     }
 
@@ -73,7 +77,6 @@ const SignIn = ({ navigation }) => {
                     onChangeText={text => setPass(text)}
                 />
 
-                <Text style={{ alignContent: "center", alignItems: "center", alignSelf: "center", color: "red" }}>{validatePassword}</Text>
                 <Button onPress={onSignIn} style={styles.button} title='Sign In' />
 
                 <Text style={styles.footerText}>Don't have an account?

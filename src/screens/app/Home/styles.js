@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2B5564",
         borderRadius: 15,
         height: 150,
-        width: 325,
+        width: 330,
         alignSelf: "center",
         margin: 15,
         paddingTop: 35,

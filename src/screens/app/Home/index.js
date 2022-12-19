@@ -217,18 +217,18 @@ const Home = ({ navigation }) => {
                     </View>
 
                     <Pressable onPress={sendToDB} hitSlop={20} style={{
-                        backgroundColor: "#324A5F",
+                        backgroundColor: "#121619",
                         borderRadius: 30,
                         justifyContent: "center",
                         flexDirection: "row",
                         height: 40,
                         width: 150,
-                        marginTop: 5,
+                        marginTop: 0,
                         alignItems: "center",
                         alignContent: "center",
                         alignSelf: "center",
                         marginRight: 10,
-                        marginBottom: 15
+                        marginBottom: 15,
                     }}>
                         <Text style={{
                             fontSize: 16,
@@ -236,8 +236,19 @@ const Home = ({ navigation }) => {
                             fontWeight: "bold",
                             color: colors.white,
                             justifyContent: "space-evenly",
+                            paddingLeft: 15
 
                         }}>Save mood</Text>
+                        <SFSymbol
+                            name="arrow.forward"
+                            weight="semibold"
+                            scale="large"
+                            color="white"
+                            size={14}
+                            resizeMode="center"
+                            multicolor={false}
+                            style={{ width: 42, height: 42 }}
+                        />
                     </Pressable>
                 </View>
 
@@ -462,8 +473,9 @@ const Home = ({ navigation }) => {
 
                                 if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == 0) {
                                     return (
-                                        <View>
-                                            <Text style={styles.title}>Your mood tracker is empty</Text>
+                                        <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
+                                            <Text style={styles.title}>Your mood tracker is empty.</Text>
+
                                         </View>
                                     )
                                 }
@@ -473,8 +485,8 @@ const Home = ({ navigation }) => {
 
 
                                             <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
-                                                <Text style={styles.title}>You have been happy this month</Text>
-                                                <Text style={styles.title}>OR</Text>
+                                                <Text style={styles.title}>We're glade to you happy this month!</Text>
+                                                <Text style={styles.title}>You may want to continue the progress by:</Text>
                                                 <LinkPreview style={{ color: colors.blue }} text='https://www.lifehack.org/articles/money/30-absolutely-free-activities-that-can-make-you-happy-today.html' />
                                             </View>
 
