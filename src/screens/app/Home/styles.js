@@ -21,8 +21,9 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         alignContent: "center",
         alignItems: "center",
-        marginTop:40,
-        paddingTop:20
+        marginTop: 20,
+        paddingTop: 5,
+
     },
 
     container2: {
@@ -74,6 +75,19 @@ export const styles = StyleSheet.create({
 
     },
 
+    container5: {
+        //borderWidth:2,
+        backgroundColor: "#2B5564",
+        borderRadius: 15,
+        height: 150,
+        width: 325,
+        alignSelf: "center",
+        margin: 15,
+        paddingTop: 35,
+        alignContent: "center",
+        alignItems: "center",
+    },
+
 
 
     Htitle: {
@@ -105,6 +119,15 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         alignSelf: "center",
         marginTop: 0,
+        color: colors.white,
+        fontWeight: "bold"
+    },
+
+    SHtitle3: {
+        fontSize: 24,
+        alignSelf: "center",
+        marginLeft:20,
+        marginTop: 5,
         color: colors.white,
         fontWeight: "bold"
     },
@@ -143,13 +166,13 @@ export const styles = StyleSheet.create({
     },
     title:
     {
-        margin:15,
-        textAlign:'justify',
+        margin: 20,
+        textAlign: 'justify',
         textAlignVertical: 'center',
-        fontSize: 14 ,
+        fontSize: 16,
         fontWeight: '600',
-        color: colors.white,
-        marginBottom: 40,
+        color: colors.blue,
+        marginBottom: 0,
 
     },
 })

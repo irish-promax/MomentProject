@@ -6,9 +6,11 @@ import { signOut } from "firebase/auth";
 import { SFSymbol } from "react-native-sfsymbols";
 import { LineChart } from "react-native-chart-kit";
 import { colors } from '../../../utils/colors';
-import { collection, query, doc, onSnapshot, where } from "firebase/firestore";
+import { addDoc, serverTimestamp, collection, query, doc, onSnapshot, where } from "firebase/firestore";
 import RadioButton from '../../../components/RadioButton';
 import SButton1 from '../../../components/SButton';
+import { Linking } from 'react-native';
+import { LinkPreview } from '@flyerhq/react-native-link-preview';
 
 
 const Home = ({ navigation }) => {
@@ -86,9 +88,9 @@ const Home = ({ navigation }) => {
                 yearLog: year,
             });
 
-            console.log("Document written with ID: ", docRef.id);
+            console.log("Document written with ID: ", docRef1.id);
             console.log("Log Sucessful: ", hours, ":", min);
-            navigation.navigate("logC");
+
         }
         catch (e) {
             console.error("Error adding document: ", e);
@@ -100,6 +102,7 @@ const Home = ({ navigation }) => {
     //Get Current Month
     var month = new Date().getMonth() + 1;
 
+    //Get Data from DB
     const docRef = doc(db, "User", authentication.currentUser.uid,)
     const colRef = collection(docRef, "Mood")
     const sorted = query(colRef, where("monthLog", "==", month))
@@ -182,39 +185,62 @@ const Home = ({ navigation }) => {
                 </View>
             </View>
 
-            <View style={{ marginTop: 30, paddingHorizontal: 10 }}>
-                <Text style={{
-                    fontSize: 16,
-                    paddingHorizontal: 10,
-                    fontWeight: "bold",
-                    color: colors.white,
-                    justifyContent: "space-evenly",
-                    marginBottom: 10
-                }}>How are you feeling today? </Text>
-                <View style={{
-                    padding: 0,
-                    backgroundColor: "#324A5F",
-                    borderRadius: 30,
-                    marginBottom: 15,
-                    height: 60,
-                    width: "98%",
-                    justifyContent: "center",
-                    alignSelf: "center"
-                }}>
-                    <View style={{
-                        fontSize: 20,
-                        alignSelf: "center",
+            <View style={styles.container1}>
+                <View style={{ marginTop: 20 }}>
+                    <Text style={{
+                        fontSize: 16,
+                        paddingHorizontal: 10,
+                        fontWeight: "bold",
                         color: colors.white,
                         justifyContent: "space-evenly",
+                        marginBottom: 15
+                    }}>How are you feeling today? </Text>
+
+                    <View style={{
+                        backgroundColor: "#324A5F",
+                        borderRadius: 30,
+                        marginBottom: 10,
+                        height: 60,
+                        width: "98%",
+                        justifyContent: "center",
+                        alignSelf: "center"
                     }}>
-                        <RadioButton data={mood} onSelect={(value) => setOption(value)} onChangeText={option => setOption(option)} />
+
+                        <View style={{
+                            fontSize: 20,
+                            alignSelf: "center",
+                            color: colors.white,
+                            justifyContent: "space-evenly",
+                        }}>
+                            <RadioButton data={mood} onSelect={(value) => setOption(value)} onChangeText={option => setOption(option)} />
+                        </View>
                     </View>
+
+                    <Pressable onPress={sendToDB} hitSlop={20} style={{
+                        backgroundColor: "#324A5F",
+                        borderRadius: 30,
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        height: 40,
+                        width: 150,
+                        marginTop: 5,
+                        alignItems: "center",
+                        alignContent: "center",
+                        alignSelf: "center",
+                        marginRight: 10,
+                        marginBottom: 15
+                    }}>
+                        <Text style={{
+                            fontSize: 16,
+                            paddingHorizontal: 10,
+                            fontWeight: "bold",
+                            color: colors.white,
+                            justifyContent: "space-evenly",
+
+                        }}>Save mood</Text>
+                    </Pressable>
                 </View>
 
-                <Button title='Save' onPress={sendToDB} />
-            </View>
-
-            <View style={styles.container1}>
                 <View style={{ flexDirection: "row", alignSelf: "center" }}>
 
                     {/* Diary button @ Home */}
@@ -249,9 +275,8 @@ const Home = ({ navigation }) => {
                 </View>
 
                 <View style={{ flexDirection: "row", alignSelf: "center" }}>
-
                     {/* VBuddy button @ Home */}
-                    <Pressable style={styles.container3} hitSlop={20} onPress={toBuddy}>
+                    <Pressable style={styles.container5} hitSlop={20} onPress={toBuddy}>
                         <SFSymbol
                             name="person.crop.square.fill"
                             weight="semibold"
@@ -266,19 +291,7 @@ const Home = ({ navigation }) => {
                     </Pressable>
 
                     {/* Calendar button @ Home */}
-                    <Pressable onPress={toCal} style={styles.container3} hitSlop={20}>
-                        <SFSymbol
-                            name="calendar.circle.fill"
-                            weight="semibold"
-                            scale="large"
-                            color="white"
-                            size={27}
-                            resizeMode="center"
-                            multicolor={false}
-                            style={{ width: 42, height: 42 }}
-                        />
-                        <Text style={styles.SHtitle}>Calendar</Text>
-                    </Pressable>
+
                 </View>
 
                 {isLoading ?
@@ -286,116 +299,115 @@ const Home = ({ navigation }) => {
                     <View style={{ marginTop: 30, justifyContent: "center", alignItems: "center", }}>
                         <ActivityIndicator size="large" color={colors.white} />
                         <Text style={{ color: colors.white, marginTop: 10 }}>Fetching mood...</Text>
-                        <Text style={{ color: colors.white, marginTop: 5 }}>It will take a few seconds</Text>
+                        <Text style={{ fontWeight: "500", fontSize: 18, color: colors.white, marginTop: 5, marginBottom: 35 }}>It will take a few seconds</Text>
                     </View>
 
                     :
 
                     <View style={{ width: Dimensions.get('screen').width, backgroundColor: "#FBAF00", borderRadius: 40, marginTop: 20, paddingTop: 20 }}>
-
                         <Text style={styles.SHtitle}>Mood Tracker</Text>
 
-                        <View style={{ marginTop: 20, justifyContent: "center", alignItems: "center" }}>
-                            <Text style={{ color: colors.white }}>As of:</Text>
-                            {(() => {
-                                if (month == 1) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>January</Text>
-                                        </View>
-                                    )
-                                }
+                        <View style={{ flexDirection: "row" }}>
+                            <View style={{ marginTop: 10 }}>
+                                <Text style={{ fontSize: 16, color: colors.white, marginLeft: 20 }}>As of:</Text>
+                                {(() => {
+                                    if (month == 1) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>January</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 2) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>February</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 2) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>February</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 3) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>March</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 3) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>March</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 4) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>April</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 4) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>April</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 5) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>May</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 5) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>May</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 6) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>June</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 6) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>June</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 7) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>July</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 7) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>July</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 8) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>August</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 8) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>August</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 9) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>September</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 9) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>September</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 10) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>Ocotber</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 10) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>Ocotber</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 11) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>November</Text>
-                                        </View>
-                                    )
-                                }
+                                    if (month == 11) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>November</Text>
+                                            </View>
+                                        )
+                                    }
 
-                                if (month == 12) {
-                                    return (
-                                        <View>
-                                            <Text style={styles.SHtitle}>December</Text>
-                                        </View>
-                                    )
-                                }
-
-
-                            })()}
+                                    if (month == 12) {
+                                        return (
+                                            <View>
+                                                <Text style={styles.SHtitle3}>December</Text>
+                                            </View>
+                                        )
+                                    }
+                                })()}
+                            </View>
                         </View>
 
                         <LineChart
@@ -464,41 +476,55 @@ const Home = ({ navigation }) => {
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isSad) {
                                         return (
-                                            <View>
-                                                <Text style={styles.title}>You went through a lot of sadness this month. You should find something fun!</Text>
-
+                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
+                                            <Text style={styles.title}>You went through a lot of sadness this month. You should find something fun!</Text>
+                                            <Text style={styles.title}>OR</Text>
+                                                <Text style={styles.title}>You may use this test for further help:</Text>
+                                                <LinkPreview style={{ color: colors.blue }} text='https://www.ramlimusa.com/questionnaires/depression-anxiety-stress-scale-dass-21-bahasa-malaysia/' />
                                             </View>
                                         )
                                     }
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isBoring) {
                                         return (
-                                            <View>
+                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>You went through a lot of boringness this month. You should find something fun!</Text>
+                                                <Text style={styles.title}>OR</Text>
+                                                <Text style={styles.title}>For further help:</Text>
+                                                <LinkPreview style={{ color: colors.blue }} text='https://www.lifehack.org/articles/money/30-absolutely-free-activities-that-can-make-you-happy-today.html' />
                                             </View>
                                         )
                                     }
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isMad) {
                                         return (
-                                            <View>
+                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>You went through a lot of boringness this month. You should find something fun!</Text>
+                                                <Text style={styles.title}>OR</Text>
+                                                <Text style={styles.title}>For further help:</Text>
+                                                <LinkPreview style={{ color: colors.blue }} text='https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/anger-management/art-20045434' />
                                             </View>
                                         )
                                     }
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isWorry) {
                                         return (
-                                            <View>
+                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>What makes you worry? Go dump all you worries with your V-Buddy!!</Text>
+                                                <Text style={styles.title}>OR</Text>
+                                                <Text style={styles.title}>You may use this test for further help:</Text>
+                                                <LinkPreview style={{ color: colors.blue }} text='https://www.ramlimusa.com/questionnaires/depression-anxiety-stress-scale-dass-21-bahasa-malaysia/' />
                                             </View>
                                         )
                                     }
 
                                     if (Math.max(isHappy, isSad, isBoring, isMad, isWorry, isShock) == isShock) {
                                         return (
-                                            <View>
+                                            <View style={{ backgroundColor: colors.white, marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
                                                 <Text style={styles.title}>What makes you shocked a lot? Go dump all you shockness with your V-Buddy!</Text>
+                                                <Text style={styles.title}>OR</Text>
+                                                <Text style={styles.title}>You may use this test for further help:</Text>
+                                                <LinkPreview style={{ color: colors.blue }} text='https://www.ramlimusa.com/questionnaires/depression-anxiety-stress-scale-dass-21-bahasa-malaysia/' />
                                             </View>
                                         )
                                     }
