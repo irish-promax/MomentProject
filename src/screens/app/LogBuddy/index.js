@@ -131,6 +131,3 @@ const LogBuddy = ({ navigation }) => {
     )
 }
 export default React.memo(LogBuddy);
-
-/* =========== Reserved Code ===========               
-*/

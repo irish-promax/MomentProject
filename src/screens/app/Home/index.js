@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, ScrollView, Dimensions, ActivityIndicator, Button } from 'react-native';
+import { View, Text, Pressable, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import { styles } from './styles';
 import { authentication, db } from '../../../../firebase-config/firebase';
 import { signOut } from "firebase/auth";
@@ -8,8 +8,6 @@ import { LineChart } from "react-native-chart-kit";
 import { colors } from '../../../utils/colors';
 import { addDoc, serverTimestamp, collection, query, doc, onSnapshot, where } from "firebase/firestore";
 import RadioButton from '../../../components/RadioButton';
-import SButton1 from '../../../components/SButton';
-import { Linking } from 'react-native';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
 
 
@@ -25,6 +23,7 @@ const Home = ({ navigation }) => {
         { value: '😰' },
         { value: '😲' },
     ];
+
     const toDiary = () => {
         navigation.navigate('Diary')
     }
@@ -58,6 +57,11 @@ const Home = ({ navigation }) => {
 
     const sendToDB = async () => {
         try {
+
+            if (option == "") {
+                alert("No mood where chosen.");
+            }
+
             //Get Current Date
             var fullDate = new Date();
 

@@ -220,8 +220,3 @@ const Buddy = ({ }) => {
 }
 
 export default React.memo(Buddy);
-
-
-/* =========== Reserved Code ===========   
-          
-*/

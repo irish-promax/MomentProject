@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
-import AuthHeader from '../../../components/AuthHeader';
 import Button from '../../../components/Buttons';
-import Input from '../../../components/Input';
 import { ScrollView, Text, TextInput, View } from 'react-native';
-import { Checkbox } from '../../../components/Checkbox';
 import { styles } from './styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { authentication, db } from '../../../../firebase-config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 const SignUp = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
     const [username, setusername] = useState('');
     const [fullname, setfullname] = useState('');
-
-
-    const [checked, setChecked] = useState(false);
 
     const onSignIn = () => {
         navigation.navigate('SignIn')
@@ -49,18 +43,14 @@ const SignUp = ({ navigation }) => {
         }
     }
 
-    const onBack = () => {
-        navigation.navigate('Splash')
-    }
-
     return (
 
         <SafeAreaView>
 
             <View style={styles.container}>
 
-
                 <Text style={styles.label1}>Sign Up</Text>
+
                 <ScrollView>
                     <Text style={styles.label}>Full Name</Text>
                     <TextInput
@@ -100,13 +90,3 @@ const SignUp = ({ navigation }) => {
 }
 
 export default React.memo(SignUp);
-
-/* =========== Reserved Code ===========
-
-                <View style = {styles.agreement}>
-                    <Checkbox checked={checked} onCheck={setChecked}/>
-
-                    <Text style = {styles.agreementText}>I agree with the Terms & Conditions</Text>
-                </View>
-
-*/

@@ -1,12 +1,6 @@
-
-
-import { collection, deleteDoc, doc, getDoc, query, where } from 'firebase/firestore';
-import React, { useState } from 'react';
-import { Text, Image, View, Pressable, TextInput, ActivityIndicator, ScrollView, Alert, Button } from 'react-native';
+import React from 'react';
+import { Text, Image, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SFSymbol } from 'react-native-sfsymbols';
-import { authentication, db } from '../../../../firebase-config/firebase';
-import Header2 from '../../../components/Header2';
 import { styles } from './styles';
 import { colors } from '../../../utils/colors';
 
@@ -73,10 +67,10 @@ const logBuddyDetailed = ({ navigation, route }) => {
                 marginTop: 50,
                 marginRight: 6,
                 width: 300,
-                
+
             }}>
                 <Pressable onPress={onBack} hitSlop={80} style={styles.container2}>
-                   <Text style={styles.SHtitle1}>OK</Text>
+                    <Text style={styles.SHtitle1}>OK</Text>
                 </Pressable>
             </View>
         </SafeAreaView>

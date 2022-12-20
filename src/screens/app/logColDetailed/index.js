@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {deleteDoc, doc, getDoc } from 'firebase/firestore';
-import { Text, Image, View, Pressable, TextInput, ActivityIndicator, ScrollView, Alert } from 'react-native';
+import { deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { Text, Image, View, Pressable, ActivityIndicator, ScrollView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SFSymbol } from 'react-native-sfsymbols';
 import { authentication, db } from '../../../../firebase-config/firebase';
@@ -58,7 +58,7 @@ const logColDetailed = ({ navigation, route }) => {
                         navigation.navigate('logC')
                     },
                 },
-                
+
                 {
                     text: "Cancel", style: "cancel"
                 }
@@ -155,10 +155,10 @@ const logColDetailed = ({ navigation, route }) => {
                                 </View>
                             </View>
                             <Text style={styles.SHtitle3}>Loggged on:</Text>
-                            <View style={{ justifyContent: "flex-start", flexDirection: "row", alignItems: "flex-end", alignContent: "flex-end", marginBottom:10 }}>
-                               
+                            <View style={{ justifyContent: "flex-start", flexDirection: "row", alignItems: "flex-end", alignContent: "flex-end", marginBottom: 10 }}>
+
                             </View>
-                            
+
                             <View style={styles.container}>
                                 <View style={styles.container1}>
                                     <View style={styles.container3}>

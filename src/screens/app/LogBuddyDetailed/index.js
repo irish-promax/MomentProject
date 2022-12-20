@@ -1,8 +1,6 @@
-
-
-import { collection, deleteDoc, doc, getDoc, query, updateDoc, where } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
-import { Text, Image, View, Pressable, TextInput, ActivityIndicator, ScrollView, Alert, Button } from 'react-native';
+import { Text, Image, View, Pressable, ActivityIndicator, ScrollView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SFSymbol } from 'react-native-sfsymbols';
 import { authentication, db } from '../../../../firebase-config/firebase';
@@ -34,7 +32,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
                         navigation.navigate('Buddy')
                     },
                 },
-                
+
                 {
                     text: "Cancel", style: "cancel"
                 }
@@ -50,7 +48,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
         docRef = doc(db, "User", authentication.currentUser.uid, "Buddy", route.params.paramKey);
         const data = {
             doneWorry: "Done",
-            
+
         };
 
         updateDoc(docRef, data)
@@ -159,7 +157,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
                             width: 190
                         }}>
                             <Pressable onPress={deleteLog} hitSlop={20} style={styles.container2}>
-                                
+
                                 <SFSymbol
                                     name="trash"
                                     weight="semibold"
@@ -172,7 +170,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
                                 />
                             </Pressable>
 
-                            <Pressable  hitSlop={20} style={styles.container2}>
+                            <Pressable hitSlop={20} onPress={toUpdate} style={styles.container2}>
                                 <SFSymbol
                                     name="person.crop.circle.fill.badge.checkmark"
                                     weight="semibold"

@@ -9,11 +9,11 @@ export const styles = StyleSheet.create({
   },
 
   butang: {
-    backgroundColor:colors.white,
+    backgroundColor: colors.white,
     alignItems: "center",
     alignContent: "center",
     alignSelf: "center",
-    height:30
+    height: 30
 
   },
 

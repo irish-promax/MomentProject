@@ -7,7 +7,6 @@ import { colors } from './src/utils/colors';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 //Import screens
-import Splash from './src/screens/auth/Splash';
 import SignUp from './src/screens/auth/SignUp';
 import SignIn from './src/screens/auth/SignIn';
 import Home from './src/screens/app/Home';
