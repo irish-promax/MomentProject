@@ -49,62 +49,67 @@ const LogDiary = ({ navigation }) => {
     }
 
     const sendToDB = async () => {
-        try {
-            //Get Current Date
-            var fullDate = new Date();
-
-            //Get Current Date
-            var date = new Date().getDate();
-
-            //Get Current Month
-            var month = new Date().getMonth() + 1;
-
-            //Get Current Year
-            var year = new Date().getFullYear();
-
-            //Get Current Time Hours
-            var hours = new Date().getHours();
-
-            //Get Current Time Minutes
-            var min = new Date().getMinutes();
-
-            const docRef = doc(db, "User", authentication.currentUser.uid,)
-            const colRef = collection(docRef, "Diary")
-            addDoc(colRef, {
-                userID: authentication.currentUser.uid,
-                prevDate: sdate,
-                log_Title: logTitle,
-                logContent: logVal,
-                moodLog: option,
-                fDate: fullDate,
-                dateLog: date,
-                monthLog: month,
-                yearLog: year,
-                timeLog_hour: hours,
-                timeLog_min: min,
-                whoLog: authentication.currentUser.email,
-                createdAt: serverTimestamp()
-
-            });
-
-            const docRef1 = doc(db, "User", authentication.currentUser.uid,)
-            const colRef1 = collection(docRef1, "Mood")
-            addDoc(colRef1, {
-                userID: authentication.currentUser.uid,
-                moodLog: option,
-                fDate: fullDate,
-                createdAt: serverTimestamp(),
-                dateLog: date,
-                monthLog: month,
-                yearLog: year,
-            });
-
-            console.log("Document written with ID: ", docRef.id);
-            console.log("Log Sucessful: ", hours, ":", min);
-            navigation.navigate("logC");
+        if (logVal == "" || option == "" || logTitle == "") {
+            alert("You left the form empty\nPlease complete the form.");
         }
-        catch (e) {
-            console.error("Error adding document: ", e);
+        else {
+            try {
+                //Get Current Date
+                var fullDate = new Date();
+
+                //Get Current Date
+                var date = new Date().getDate();
+
+                //Get Current Month
+                var month = new Date().getMonth() + 1;
+
+                //Get Current Year
+                var year = new Date().getFullYear();
+
+                //Get Current Time Hours
+                var hours = new Date().getHours();
+
+                //Get Current Time Minutes
+                var min = new Date().getMinutes();
+
+                const docRef = doc(db, "User", authentication.currentUser.uid,)
+                const colRef = collection(docRef, "Diary")
+                addDoc(colRef, {
+                    userID: authentication.currentUser.uid,
+                    prevDate: sdate,
+                    log_Title: logTitle,
+                    logContent: logVal,
+                    moodLog: option,
+                    fDate: fullDate,
+                    dateLog: date,
+                    monthLog: month,
+                    yearLog: year,
+                    timeLog_hour: hours,
+                    timeLog_min: min,
+                    whoLog: authentication.currentUser.email,
+                    createdAt: serverTimestamp()
+
+                });
+
+                const docRef1 = doc(db, "User", authentication.currentUser.uid,)
+                const colRef1 = collection(docRef1, "Mood")
+                addDoc(colRef1, {
+                    userID: authentication.currentUser.uid,
+                    moodLog: option,
+                    fDate: fullDate,
+                    createdAt: serverTimestamp(),
+                    dateLog: date,
+                    monthLog: month,
+                    yearLog: year,
+                });
+
+                console.log("Document written with ID: ", docRef.id);
+                console.log("Log Sucessful: ", hours, ":", min);
+                navigation.navigate("logC");
+            }
+            catch (e) {
+                console.error("Error adding document: ", e);
+            }
         }
     }
 
@@ -164,19 +169,22 @@ const LogDiary = ({ navigation }) => {
             else if (res.errorCode) {
                 console.log(res.e)
             }
-            else {
 
+            else {
                 const data = res.assets[0];
                 setImageGal(data);
+                const file = data;
                 console.log(data);
 
                 const metadata = {
                     contentType: 'image/jpeg'
                 };
 
+                console.log("hello: " + file);
+
                 // Upload file and metadata to the object 'images/mountains.jpg'
-                const storageRef = ref(storage, 'images/' + data.fileName);
-                const uploadTask = uploadBytesResumable(storageRef, imageGal, metadata);
+                const storageRef = ref(storage, data.fileName);
+                const uploadTask = uploadBytesResumable(storageRef, file);
 
                 console.log(storage, 'images/' + data.fileName);
                 // Listen for state changes, errors, and completion of the upload.
@@ -204,8 +212,6 @@ const LogDiary = ({ navigation }) => {
                             case 'storage/canceled':
                                 // User canceled the upload
                                 break;
-
-                            // ...
 
                             case 'storage/unknown':
                                 // Unknown error occurred, inspect error.serverResponse
@@ -271,18 +277,18 @@ const LogDiary = ({ navigation }) => {
                     />
                 </Pressable>
             </View>
-            <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
-                <View>
 
-                    <View style={{ paddingHorizontal: 15 }} >
-                        <View style={styles.container2}>
-                            <View style={styles.SHtitle}>
-                                <RadioButton data={mood} onSelect={(value) => setOption(value)} onChangeText={option => setOption(option)} />
-                            </View>
+            <View>
+
+                <View style={{ paddingHorizontal: 15 }} >
+                    <View style={styles.container2}>
+                        <View style={styles.SHtitle}>
+                            <RadioButton data={mood} onSelect={(value) => setOption(value)} onChangeText={option => setOption(option)} />
                         </View>
                     </View>
+                </View>
 
-
+                {/*
                     <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
                         <View>
                             {
@@ -301,42 +307,40 @@ const LogDiary = ({ navigation }) => {
                             }
                         </View>
                     </View>
+                    */ }
 
+            </View>
 
+            <View style={styles.container1}>
+                <View>
+                    <TextInput
+                        style={styles.title}
+                        value={logTitle}
+                        onChangeText={logTitle => setlogTitle(logTitle)}
+                        placeholder="Summarize you day in one word here..."
+                        placeholderTextColor={"#1E2D2F"}
+                    />
                 </View>
 
-                <View style={styles.container1}>
-                    <View>
-                        <TextInput
-                            style={styles.title}
-                            value={logTitle}
-                            onChangeText={logTitle => setlogTitle(logTitle)}
-                            placeholder="Summarize you day in one word here..."
-                            placeholderTextColor={"#1E2D2F"}
-                        />
-                    </View>
-
-                    <View>
-                        <TextInput
-                            placeholder="Dear journal..."
-                            placeholderTextColor={"#1E2D2F"}
-                            numberOfLines={10}
-                            multiline={true}
-                            style={styles.Log}
-                            value={logVal}
-                            onChangeText={logVal => setLogVal(logVal)}
-                        />
-                    </View>
-
-
-                    <View style={{ alignSelf: "center", flexDirection: "row" }}>
-                        <SButton title='Save to collection' onPress={sendToDB} />
-                    </View>
-
+                <View>
+                    <TextInput
+                        placeholder="Dear journal..."
+                        placeholderTextColor={"#1E2D2F"}
+                        numberOfLines={10}
+                        multiline={true}
+                        style={styles.Log}
+                        value={logVal}
+                        onChangeText={logVal => setLogVal(logVal)}
+                    />
                 </View>
-                <View style={{ height: 100 }} />
-            </ScrollView>
 
+
+                <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                    <SButton title='Save to collection' onPress={sendToDB} />
+                </View>
+
+            </View>
+            <View style={{ height: 100 }} />
         </SafeAreaView>
     )
 }

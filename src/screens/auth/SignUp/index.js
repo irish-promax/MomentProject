@@ -22,6 +22,7 @@ const SignUp = ({ navigation }) => {
         if (email == "" || password == "" || username == "" || fullname == "") {
             alert("You left the form empty\nPlease complete the form.");
         }
+        
         else {
 
             createUserWithEmailAndPassword(authentication, email, password)

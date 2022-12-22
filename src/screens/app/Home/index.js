@@ -489,7 +489,7 @@ const Home = ({ navigation }) => {
 
 
                                             <View style={{ backgroundColor: "#FFFDFD", marginBottom: 25, borderRadius: 30, marginTop: 20, paddingBottom: 40, marginHorizontal: 10 }}>
-                                                <Text style={styles.title}>We're glade to you happy this month!</Text>
+                                                <Text style={styles.title}>We're glad to see you happy this month!</Text>
                                                 <Text style={styles.title}>You may want to continue the progress by:</Text>
                                                 <LinkPreview style={{ color: colors.blue }} text='https://www.lifehack.org/articles/money/30-absolutely-free-activities-that-can-make-you-happy-today.html' />
                                             </View>

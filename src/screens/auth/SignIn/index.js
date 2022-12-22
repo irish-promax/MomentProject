@@ -15,8 +15,11 @@ const SignIn = ({ navigation }) => {
     const [validatePassword, setValidatePassword] = useState('');
 
     const onSignIn = () => {
-
-
+        if (email == "" || password == "") {
+            alert("You left the form empty\nPlease complete the form.");
+        }
+        
+        else{
         signInWithEmailAndPassword(authentication, email, password)
             .then((re) => {
                 //const user = userCredentials.user;
@@ -34,6 +37,7 @@ const SignIn = ({ navigation }) => {
 
                 alert("Invalid Credential!");
             })
+        }
     }
 
     const onSignUp = () => {

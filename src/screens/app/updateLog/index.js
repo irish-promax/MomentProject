@@ -23,6 +23,7 @@ const updateLog = ({ navigation, route }) => {
                 if (docData.exists()) {
                     //console.log("Document data:", docData.data());
                     setlogTitle(docData.data().log_Title);
+                    setlogContent(docData.data().logContent);
                     setlogDay(docData.data().createdAt);
                     setlogMood(docData.data().moodLog);
                 
