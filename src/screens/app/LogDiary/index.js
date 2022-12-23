@@ -288,7 +288,7 @@ const LogDiary = ({ navigation }) => {
                     </View>
                 </View>
 
-                {/*
+                
                     <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
                         <View>
                             {
@@ -307,7 +307,7 @@ const LogDiary = ({ navigation }) => {
                             }
                         </View>
                     </View>
-                    */ }
+                    
 
             </View>
 
