@@ -180,8 +180,6 @@ const LogDiary = ({ navigation }) => {
                     contentType: 'image/jpeg'
                 };
 
-                console.log("hello: " + file);
-
                 // Upload file and metadata to the object 'images/mountains.jpg'
                 const storageRef = ref(storage, data.fileName);
                 const uploadTask = uploadBytesResumable(storageRef, file);
