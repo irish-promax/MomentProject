@@ -20,7 +20,7 @@ import Buddy from './src/screens/app/Buddy';
 import LogBuddy from './src/screens/app/LogBuddy'
 import LogBuddyDetailed from './src/screens/app/LogBuddyDetailed'
 import wooryLogged from './src/screens/app/wooryLogged';
-import searchLogColDetailed from '/Users/imanirishdaniel/Desktop/MomentProject/src/screens/app/searchLogColDetailed';
+import searchLogColDetailed from './src/screens/app/searchLogColDetailed';
 
 const Stack = createNativeStackNavigator();
 
