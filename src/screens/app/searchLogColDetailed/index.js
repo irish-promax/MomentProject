@@ -1,34 +1,32 @@
 
 import React, { useState } from 'react';
 import { Dimensions, FlatList, Image, Pressable, Text, TextInput, View } from 'react-native';
-import { styles } from './styles';
+import { styles } from './style.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { authentication, db } from '../../../../firebase-config/firebase';
 import { SFSymbol } from "react-native-sfsymbols";
 import Header2 from '../../../components/Header2';
-import { collection, query, orderBy, doc, onSnapshot } from "firebase/firestore";
+import { collection, query, orderBy, doc, onSnapshot, where } from "firebase/firestore";
 import { ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../../../utils/colors';
 import DatePicker from 'react-native-date-picker';
 
 
-const logCollection = () => {
+const logCollection = ({route}) => {
     const navigation = useNavigation();
 
     let [isLoading, setIsLoading] = React.useState(true);
     let [isRefresh, setIsRefresh] = React.useState(false);
     let [loggedEntry, setloggedEntry] = React.useState([]);
-    const [open, setOpen] = useState(false);
-    const [sdate, setDate] = useState('');
+    
 
-    //Get Current Date
-    var fullDate = new Date();
+    console.log(route.params.paramKey);
 
     let loadList = async () => {
         const docRef = doc(db, "User", authentication.currentUser.uid,)
         const colRef = collection(docRef, "Diary")
-        const sorted = await query(colRef, orderBy("createdAt", "desc"))
+        const sorted = await query(colRef, where("monthLog", "==", route.params.paramKey))
 
         const unsubscribe = onSnapshot(sorted, (querySnapshot) => {
             let loggedEntry = [];
@@ -38,7 +36,6 @@ const logCollection = () => {
                 loggedEntry.push(entry);
             });
 
-            //console.log(loggedEntry);
             setloggedEntry(loggedEntry);
             setIsLoading(false);
             setIsRefresh(false);
@@ -53,54 +50,12 @@ const logCollection = () => {
         navigation.navigate('Tabs')
     };
 
-    const toLogCal = () => {
-        navigation.navigate('Diary')
-    };
-
-    
-    const toSearchbyDate = () => {
-        if (sdate == "") {
-            alert("You left the form empty\nPlease complete the form.");
-        }
-        else {
-            
-            navigation.navigate("SDate", { paramKey: sdate.getMonth() + 1})
-          
-        }
-    };
-
     return (
         <SafeAreaView>
 
             <View >
                 <Header2 onBackPress={onBack} title="Back" />
             </View>
-
-            <View style={{ borderRadius: 30, marginTop: 40, flexDirection: "row", justifyContent: "space-evenly", backgroundColor: "#5E747F", height: 50, width: Dimensions.get('screen').width, alignContent: "center", alignItems: "center" }}>
-                <View>
-                    <Pressable title="Open" onPress={() => setOpen(true)}>
-                        <Text style={{ fontWeight: "800", color: colors.white }}>🗓 Select by month</Text>
-                    </Pressable>
-
-                    <DatePicker
-                        modal
-                        mode='date'
-                        open={open}
-                        date={fullDate}
-                        maximumDate={new Date()}
-                        onConfirm={(sdate) => {
-                            setOpen(false)
-                            setDate(sdate)
-                        }}
-                        onCancel={() => { setOpen(false) }} />
-                    {console.log('Today: ' + sdate)}
-
-                </View>
-                <Pressable onPress={toSearchbyDate}>
-                    <SFSymbol name="magnifyingglass.circle.fill" color="white" size={30} style={{ marginLeft: 120, width: 40, height: 20 }} />
-                </Pressable>
-            </View>
-
 
             <View style={{ marginTop: 20, marginBottom: 10, flexDirection: "row", justifyContent: "center" }}>
                 <Text style={styles.SHtitle4}>Drag down to refresh</Text>

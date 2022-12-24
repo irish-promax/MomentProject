@@ -23,6 +23,10 @@ const LogDiary = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [imageGal, setImageGal] = useState('');
     const [imageCam, setImageCam] = useState('');
+
+    const [image, setImage] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [transferred, setTransferred] = useState(0);
     //Get Current Date
     var date = new Date().getDate();
 
@@ -155,6 +159,31 @@ const LogDiary = ({ navigation }) => {
         })
     }
 
+    const selectImage = () => {
+        const options = {
+            maxWidth: 2000,
+            maxHeight: 2000,
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.launchImageLibrary(options, response => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+                console.log(source);
+                setImage(source);
+            }
+        });
+    };
+
+
     const openGal = () => {
         const option = {
             mediaType: 'photo',
@@ -182,7 +211,8 @@ const LogDiary = ({ navigation }) => {
 
                 // Upload file and metadata to the object 'images/mountains.jpg'
                 const storageRef = ref(storage, data.fileName);
-                const uploadTask = uploadBytesResumable(storageRef, file);
+                const uploadTask = uploadBytesResumable(storageRef, imageGal);
+                console.log("File uploaded")
 
                 console.log(storage, 'images/' + data.fileName);
                 // Listen for state changes, errors, and completion of the upload.
@@ -201,8 +231,7 @@ const LogDiary = ({ navigation }) => {
                         }
                     },
                     (error) => {
-                        // A full list of error codes is available at
-                        // https://firebase.google.com/docs/storage/web/handle-errors
+
                         switch (error.code) {
                             case 'storage/unauthorized':
                                 // User doesn't have permission to access the object
@@ -259,86 +288,86 @@ const LogDiary = ({ navigation }) => {
                     onCancel={() => { setOpen(false) }} />
             </View>
 
-            <View style={{ marginBottom: 8, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "space-between" }}>
-                <Text style={styles.SHtitle2}>How are you feeling today? </Text>
-                <Pressable hitSlop={20} onPress={toLogCol} style={styles.container3}>
-                    <Text style={styles.SHtitle3}>Collection</Text>
-                    <SFSymbol
-                        name="book.closed.fill"
-                        weight="semibold"
-                        scale="large"
-                        color="white"
-                        size={16}
-                        resizeMode="center"
-                        multicolor={false}
-                        style={{ width: 20, height: 20 }}
-                    />
-                </Pressable>
-            </View>
-
-            <View>
-
-                <View style={{ paddingHorizontal: 15 }} >
-                    <View style={styles.container2}>
-                        <View style={styles.SHtitle}>
-                            <RadioButton data={mood} onSelect={(value) => setOption(value)} onChangeText={option => setOption(option)} />
-                        </View>
-                    </View>
+            
+            <ScrollView>
+                <View style={{ marginBottom: 8, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "space-between" }}>
+                    <Text style={styles.SHtitle2}>How are you feeling today? </Text>
+                    <Pressable hitSlop={20} onPress={toLogCol} style={styles.container3}>
+                        <Text style={styles.SHtitle3}>Collection</Text>
+                        <SFSymbol
+                            name="book.closed.fill"
+                            weight="semibold"
+                            scale="large"
+                            color="white"
+                            size={16}
+                            resizeMode="center"
+                            multicolor={false}
+                            style={{ width: 20, height: 20 }}
+                        />
+                    </Pressable>
                 </View>
 
-                
-                    <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
+                <View>
+
+                    <View style={{ paddingHorizontal: 15 }} >
+                        <View style={styles.container2}>
+                            <View style={styles.SHtitle}>
+                                <RadioButton data={mood} onSelect={(value) => setOption(value)} onChangeText={option => setOption(option)} />
+                            </View>
+                        </View>
+                    </View>
+
+
+                    {/*} <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
                         <View>
                             {
+                                image ?
+                                    <Image source={{ uri: image.uri }} style={{ borderRadius: 10, width: Dimensions.get('window').width, height: Dimensions.get('window').height, }} />
 
-                                imageGal ?
-                                    <Image
-                                        source={{ uri: imageGal.uri }}
-                                        style={{ borderRadius: 10, width: Dimensions.get('window').width, height: Dimensions.get('window').height, }}
-                                    />
                                     :
                                     <View>
-                                        <Pressable style={styles.container3} onPress={openGal}>
+                                        <Pressable style={styles.container3} onPress={selectImage}>
                                             <Text style={styles.SHtitle3}>Select Image</Text>
                                         </Pressable>
                                     </View>
                             }
                         </View>
+                        </View>*/}
+
+
+                </View>
+
+                <View style={styles.container1}>
+                    <View>
+                        <TextInput
+                            style={styles.title}
+                            value={logTitle}
+                            onChangeText={logTitle => setlogTitle(logTitle)}
+                            placeholder="Summarize you day in one word here..."
+                            placeholderTextColor={"#1E2D2F"}
+                        />
                     </View>
-                    
 
-            </View>
+                    <View>
+                        <TextInput
+                            placeholder="Dear journal..."
+                            placeholderTextColor={"#1E2D2F"}
+                            numberOfLines={10}
+                            multiline={true}
+                            style={styles.Log}
+                            value={logVal}
+                            onChangeText={logVal => setLogVal(logVal)}
+                        />
+                    </View>
 
-            <View style={styles.container1}>
-                <View>
-                    <TextInput
-                        style={styles.title}
-                        value={logTitle}
-                        onChangeText={logTitle => setlogTitle(logTitle)}
-                        placeholder="Summarize you day in one word here..."
-                        placeholderTextColor={"#1E2D2F"}
-                    />
+
+                    <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                        <SButton title='Save to collection' onPress={sendToDB} />
+                    </View>
+
                 </View>
-
-                <View>
-                    <TextInput
-                        placeholder="Dear journal..."
-                        placeholderTextColor={"#1E2D2F"}
-                        numberOfLines={10}
-                        multiline={true}
-                        style={styles.Log}
-                        value={logVal}
-                        onChangeText={logVal => setLogVal(logVal)}
-                    />
-                </View>
-
-
-                <View style={{ alignSelf: "center", flexDirection: "row" }}>
-                    <SButton title='Save to collection' onPress={sendToDB} />
-                </View>
-
-            </View>
-            <View style={{ height: 100 }} />
+                <View style={{ height: 100 }} />
+            </ScrollView>
         </SafeAreaView>
     )
 }

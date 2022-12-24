@@ -20,6 +20,7 @@ import Buddy from './src/screens/app/Buddy';
 import LogBuddy from './src/screens/app/LogBuddy'
 import LogBuddyDetailed from './src/screens/app/LogBuddyDetailed'
 import wooryLogged from './src/screens/app/wooryLogged';
+import searchLogColDetailed from '/Users/imanirishdaniel/Desktop/MomentProject/src/screens/app/searchLogColDetailed';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ const App = ({ }) => {
           <Stack.Screen name="logC" component={logCollection} options={{ headerShown: false }} />
           <Stack.Screen name="LCD" component={logColDetailed} options={{ headerShown: false }} />
           <Stack.Screen name="UPD" component={updateLog} options={{ headerShown: false }}/>
+          <Stack.Screen name="SDate" component={searchLogColDetailed} options={{ headerShown: false }}/>
 
           <Stack.Screen name="Buddy" component={Buddy} options={{ headerShown: false }} />
           <Stack.Screen name="LBuddy" component={LogBuddy} options={{ headerShown: false }} />
