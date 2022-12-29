@@ -26,6 +26,7 @@ const LogDiary = ({ navigation }) => {
     const [uploadimageCam, setuploadImageCam] = useState('');
     
     //test to push and pull
+    //hellollll
 
     //Get Current Date
     var date = new Date().getDate();
