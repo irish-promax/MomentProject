@@ -13,13 +13,13 @@ import { colors } from '../../../utils/colors';
 import DatePicker from 'react-native-date-picker';
 
 
-const logCollection = ({route}) => {
+const logCollection = ({ route }) => {
     const navigation = useNavigation();
 
     let [isLoading, setIsLoading] = React.useState(true);
     let [isRefresh, setIsRefresh] = React.useState(false);
     let [loggedEntry, setloggedEntry] = React.useState([]);
-    
+
 
     console.log(route.params.paramKey);
 

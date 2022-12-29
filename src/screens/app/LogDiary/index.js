@@ -4,14 +4,14 @@ import { View, Text, TextInput, Pressable, ScrollView, Image, Dimensions } from 
 import { styles } from './styles';
 import { authentication, db, storage } from '../../../../firebase-config/firebase';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SButton from '/Users/imanirishdaniel/Desktop/MomentProject/src/components/SButton';
+import SButton from '../../../components/SButton';
 import Header2 from '../../../components/Header2';
 import { collection, addDoc, serverTimestamp, doc } from "firebase/firestore";
 import RadioButton from '../../../components/RadioButton';
 import DatePicker from 'react-native-date-picker'
 import { SFSymbol } from 'react-native-sfsymbols';
 import * as ImagePicker from "react-native-image-picker";
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 
 
 const LogDiary = ({ navigation }) => {
@@ -23,10 +23,7 @@ const LogDiary = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [imageGal, setImageGal] = useState('');
     const [imageCam, setImageCam] = useState('');
-
-    const [image, setImage] = useState(null);
-    const [uploading, setUploading] = useState(false);
-    const [transferred, setTransferred] = useState(0);
+    const [uploadimageCam, setuploadImageCam] = useState('');
     //Get Current Date
     var date = new Date().getDate();
 
@@ -53,9 +50,11 @@ const LogDiary = ({ navigation }) => {
     }
 
     const sendToDB = async () => {
-        if (logVal == "" || option == "" || logTitle == "") {
+
+        if (logTitle == "" || option == "" || logVal == "") {
             alert("You left the form empty\nPlease complete the form.");
         }
+
         else {
             try {
                 //Get Current Date
@@ -128,6 +127,7 @@ const LogDiary = ({ navigation }) => {
         { value: '😡' },
         { value: '😰' },
         { value: '😲' },
+
     ];
 
     const toLogCol = () => {
@@ -159,38 +159,13 @@ const LogDiary = ({ navigation }) => {
         })
     }
 
-    const selectImage = () => {
-        const options = {
-            maxWidth: 2000,
-            maxHeight: 2000,
-            storageOptions: {
-                skipBackup: true,
-                path: 'images'
-            }
-        };
-        ImagePicker.launchImageLibrary(options, response => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                const source = { uri: response.uri };
-                console.log(source);
-                setImage(source);
-            }
-        });
-    };
-
-
-    const openGal = () => {
+    const openGal = async () => {
         const option = {
             mediaType: 'photo',
             quality: 1
         }
 
-        ImagePicker.launchImageLibrary(option, (res) => {
+        ImagePicker.launchImageLibrary(option, async (res) => {
             if (res.didCancel) {
                 console.log("User cancel")
             }
@@ -198,60 +173,28 @@ const LogDiary = ({ navigation }) => {
             else if (res.errorCode) {
                 console.log(res.e)
             }
-
             else {
+
+                // const r = await fetch(res.assets[0]);
+                // const b = await r.blob();
+
+                //setuploadImageCam(b);
+
                 const data = res.assets[0];
                 setImageGal(data);
-                const file = data;
-                console.log(data);
 
                 const metadata = {
                     contentType: 'image/jpeg'
                 };
 
                 // Upload file and metadata to the object 'images/mountains.jpg'
-                const storageRef = ref(storage, data.fileName);
-                const uploadTask = uploadBytesResumable(storageRef, imageGal);
-                console.log("File uploaded")
+                // const storageRef = ref(storage, 'images/' + data.fileName);
 
-                console.log(storage, 'images/' + data.fileName);
-                // Listen for state changes, errors, and completion of the upload.
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
-                        switch (snapshot.state) {
-                            case 'paused':
-                                console.log('Upload is paused');
-                                break;
-                            case 'running':
-                                console.log('Upload is running');
-                                break;
-                        }
-                    },
-                    (error) => {
+                // uploadBytes(storageRef, uploadimageCam).then((snapshot) => {
+                //    console.log('Uploaded a blob or file!');
+                //  });
 
-                        switch (error.code) {
-                            case 'storage/unauthorized':
-                                // User doesn't have permission to access the object
-                                break;
-                            case 'storage/canceled':
-                                // User canceled the upload
-                                break;
 
-                            case 'storage/unknown':
-                                // Unknown error occurred, inspect error.serverResponse
-                                break;
-                        }
-                    },
-                    () => {
-                        // Upload completed successfully, now we can get the download URL
-                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            console.log('File available at', downloadURL);
-                        });
-                    }
-                );
 
             }
         })
@@ -288,25 +231,23 @@ const LogDiary = ({ navigation }) => {
                     onCancel={() => { setOpen(false) }} />
             </View>
 
-            
-            <ScrollView>
-                <View style={{ marginBottom: 8, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "space-between" }}>
-                    <Text style={styles.SHtitle2}>How are you feeling today? </Text>
-                    <Pressable hitSlop={20} onPress={toLogCol} style={styles.container3}>
-                        <Text style={styles.SHtitle3}>Collection</Text>
-                        <SFSymbol
-                            name="book.closed.fill"
-                            weight="semibold"
-                            scale="large"
-                            color="white"
-                            size={16}
-                            resizeMode="center"
-                            multicolor={false}
-                            style={{ width: 20, height: 20 }}
-                        />
-                    </Pressable>
-                </View>
-
+            <View style={{ marginBottom: 8, flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "space-between" }}>
+                <Text style={styles.SHtitle2}>How are you feeling today? </Text>
+                <Pressable hitSlop={20} onPress={toLogCol} style={styles.container3}>
+                    <Text style={styles.SHtitle3}>Collection</Text>
+                    <SFSymbol
+                        name="book.closed.fill"
+                        weight="semibold"
+                        scale="large"
+                        color="white"
+                        size={16}
+                        resizeMode="center"
+                        multicolor={false}
+                        style={{ width: 20, height: 20 }}
+                    />
+                </Pressable>
+            </View>
+            <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
                 <View>
 
                     <View style={{ paddingHorizontal: 15 }} >
@@ -318,21 +259,24 @@ const LogDiary = ({ navigation }) => {
                     </View>
 
 
-                    {/*} <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
+                    <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
                         <View>
                             {
-                                image ?
-                                    <Image source={{ uri: image.uri }} style={{ borderRadius: 10, width: Dimensions.get('window').width, height: Dimensions.get('window').height, }} />
 
+                                imageGal ?
+                                    <Image
+                                        source={{ uri: imageGal.uri }}
+                                        style={{ borderRadius: 10, width: Dimensions.get('window').width, height: Dimensions.get('window').height, }}
+                                    />
                                     :
                                     <View>
-                                        <Pressable style={styles.container3} onPress={selectImage}>
+                                        <Pressable style={styles.container3} onPress={openGal}>
                                             <Text style={styles.SHtitle3}>Select Image</Text>
                                         </Pressable>
                                     </View>
                             }
                         </View>
-                        </View>*/}
+                    </View>
 
 
                 </View>
@@ -368,12 +312,8 @@ const LogDiary = ({ navigation }) => {
                 </View>
                 <View style={{ height: 100 }} />
             </ScrollView>
+
         </SafeAreaView>
     )
 }
 export default React.memo(LogDiary);
-
-//<Text style={styles.Htitle}>Diary</Text>
-//<Text style={styles.dateText1}> {date} / {month} / {year} </Text>
-//<Text style={styles.dateText1}> | </Text>
-//<Text style={styles.dateText1}> {hours}:{min}</Text>

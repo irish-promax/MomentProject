@@ -57,15 +57,15 @@ const logCollection = () => {
         navigation.navigate('Diary')
     };
 
-    
+
     const toSearchbyDate = () => {
         if (sdate == "") {
             alert("You left the form empty\nPlease complete the form.");
         }
         else {
-            
-            navigation.navigate("SDate", { paramKey: sdate.getMonth() + 1})
-          
+
+            navigation.navigate("SDate", { paramKey: sdate.getMonth() + 1 })
+
         }
     };
 

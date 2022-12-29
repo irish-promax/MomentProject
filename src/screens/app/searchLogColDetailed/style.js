@@ -96,9 +96,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     alignSelf: "center",
-    left:-50,
+    left: -50,
     bottom: -650,
-},
+  },
   Htitle: {
     fontSize: 35,
     textAlign: "center",

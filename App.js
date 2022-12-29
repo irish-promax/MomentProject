@@ -43,8 +43,8 @@ const App = ({ }) => {
           <Stack.Screen name="LO" component={SLogout} options={{ headerShown: false }} />
           <Stack.Screen name="logC" component={logCollection} options={{ headerShown: false }} />
           <Stack.Screen name="LCD" component={logColDetailed} options={{ headerShown: false }} />
-          <Stack.Screen name="UPD" component={updateLog} options={{ headerShown: false }}/>
-          <Stack.Screen name="SDate" component={searchLogColDetailed} options={{ headerShown: false }}/>
+          <Stack.Screen name="UPD" component={updateLog} options={{ headerShown: false }} />
+          <Stack.Screen name="SDate" component={searchLogColDetailed} options={{ headerShown: false }} />
 
           <Stack.Screen name="Buddy" component={Buddy} options={{ headerShown: false }} />
           <Stack.Screen name="LBuddy" component={LogBuddy} options={{ headerShown: false }} />
@@ -59,4 +59,3 @@ const App = ({ }) => {
 };
 
 export default App;
-
