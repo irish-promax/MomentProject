@@ -172,7 +172,7 @@ const Home = ({ navigation }) => {
         <ScrollView>
             <View>
                 <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", marginTop: 50 }}>
-                    <Text style={styles.Htitle1}>Moment</Text>
+                    <Text style={styles.Htitle1}>Moment 1</Text>
                     <View style={{ width: 185 }}></View>
                     <Pressable onPress={onSignOut} hitSlop={20}>
                         <SFSymbol
