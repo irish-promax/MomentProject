@@ -156,9 +156,9 @@ export const styles = StyleSheet.create({
     },
 
     SHtitle3:{
-        fontSize: 14,
+        fontSize: 30,
         color:colors.white,
-       padding:6
+
        
     },
 

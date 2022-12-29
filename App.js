@@ -10,7 +10,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SignUp from './src/screens/auth/SignUp';
 import SignIn from './src/screens/auth/SignIn';
 import Home from './src/screens/app/Home';
-import CalendarV from './src/screens/app/CalendarV';
 import LogDiary from './src/screens/app/LogDiary';
 import logColDetailed from './src/screens/app/logColDetailed';
 import SLogout from './src/screens/app/SLogout';
@@ -21,7 +20,7 @@ import LogBuddy from './src/screens/app/LogBuddy'
 import LogBuddyDetailed from './src/screens/app/LogBuddyDetailed'
 import wooryLogged from './src/screens/app/wooryLogged';
 import searchLogColDetailed from './src/screens/app/searchLogColDetailed';
-
+import MoodTracker from './src/screens/app/MoodTracker';
 const Stack = createNativeStackNavigator();
 
 const theme = {
@@ -51,7 +50,8 @@ const App = ({ }) => {
           <Stack.Screen name="WD" component={wooryLogged} options={{ headerShown: false }} />
           <Stack.Screen name="LBD" component={LogBuddyDetailed} options={{ headerShown: false }} />
 
-          <Stack.Screen name="Cal" component={CalendarV} options={{ headerShown: false }} />
+          <Stack.Screen name="MT" component={MoodTracker} options={{ headerShown: false }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

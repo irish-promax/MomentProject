@@ -10,10 +10,10 @@ import { collection, query, orderBy, doc, onSnapshot } from "firebase/firestore"
 import { ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../../../utils/colors';
-import DatePicker from 'react-native-date-picker';
 
 
-const logCollection = () => {
+
+const MoodTracker = () => {
     const navigation = useNavigation();
 
     let [isLoading, setIsLoading] = React.useState(true);
@@ -27,7 +27,7 @@ const logCollection = () => {
 
     let loadList = async () => {
         const docRef = doc(db, "User", authentication.currentUser.uid,)
-        const colRef = collection(docRef, "Diary")
+        const colRef = collection(docRef, "Mood")
         const sorted = await query(colRef, orderBy("createdAt", "desc"))
 
         const unsubscribe = onSnapshot(sorted, (querySnapshot) => {
@@ -53,22 +53,6 @@ const logCollection = () => {
         navigation.navigate('Tabs')
     };
 
-    const toLogCal = () => {
-        navigation.navigate('Diary')
-    };
-
-
-    const toSearchbyDate = () => {
-        if (sdate == "") {
-            alert("You left the form empty\nPlease complete the form.");
-        }
-        else {
-            console.log(sdate.toLocaleDateString('en-GB'))
-            navigation.navigate("SDate", { paramKey: sdate.toLocaleDateString('en-GB') })
-
-        }
-    };
-
     return (
         <SafeAreaView>
 
@@ -76,35 +60,14 @@ const logCollection = () => {
                 <Header2 onBackPress={onBack} title="Back" />
             </View>
 
-            <View style={{ borderRadius: 30, marginTop: 40, flexDirection: "row", justifyContent: "space-evenly", backgroundColor: "#5E747F", height: 50, width: Dimensions.get('screen').width, alignContent: "center", alignItems: "center" }}>
-                <View>
-                    <Pressable title="Open" onPress={() => setOpen(true)}>
-                        <Text style={{ fontWeight: "800", color: colors.white }}>🗓 Select by date</Text>
-                    </Pressable>
-
-                    <DatePicker
-                        modal
-                        mode='date'
-                        open={open}
-                        date={fullDate}
-                        maximumDate={new Date()}
-                        onConfirm={(sdate) => {
-                            setOpen(false)
-                            setDate(sdate)
-                        }}
-                        onCancel={() => { setOpen(false) }} />
-                    {console.log('Today: ' + sdate)}
-
-                </View>
-                <Pressable onPress={toSearchbyDate}>
-                    <SFSymbol name="magnifyingglass.circle.fill" color="white" size={30} style={{ marginLeft: 120, width: 40, height: 20 }} />
-                </Pressable>
-            </View>
-
-
             <View style={{ marginTop: 20, marginBottom: 10, flexDirection: "row", justifyContent: "center" }}>
                 <Text style={styles.SHtitle4}>Drag down to refresh</Text>
                 <SFSymbol name="arrow.clockwise.circle.fill" color="white" size={14} style={{ width: 42, height: 42 }} />
+            </View>
+
+            <View style={{ marginTop: 20, marginBottom: 20 }}>
+                <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: "bold", color: colors.white }}>Mood History</Text>
+
             </View>
 
             <View style={{}}>
@@ -132,35 +95,67 @@ const logCollection = () => {
                             setIsRefresh(true);
                         }}
                         renderItem={({ item }) => (
-                            <Pressable
-                                onPress={() => {
-                                    navigation.navigate('LCD', { paramKey: item.id })
-                                }}>
+                            <View>
+
                                 <View style={styles.listcontainer}>
                                     <View style={styles.Lcontainer2}>
                                         <Text style={styles.SHtitle3}>{item.moodLog}</Text>
                                     </View>
+                                    <View>
+                                        <View style={styles.Lcontainer3}>
+                                            <Text style={{ color: colors.white }}>{item.dateString}</Text>
+                                        </View>
 
-                                    <View style={styles.Lcontainer1}>
-                                        <Text style={styles.SHtitle2}>{item.log_Title}</Text>
-                                    </View>
+                                        {(() => {
+                                            switch (item.moodLog) {
+                                                case '🥳':
+                                                    return <View>
+                                                        <Text style={styles.SHtitle2}>Feeling Happy</Text>
+                                                    </View>
 
-                                    <View style={styles.Lcontainer3}>
-                                        <Text style={styles.SHtitle2}>{item.dateString}</Text>
-                                    </View>
+                                                case '🙁':
+                                                    return <View>
+                                                        <Text style={styles.SHtitle2}>Feeling Sad</Text>
+                                                    </View>
+                                                case '🥱':
+                                                    return <View>
+                                                        <Text style={styles.SHtitle2}>Feeling Bored</Text>
+                                                    </View>
+                                                case '😡':
+                                                    return <View>
+                                                        <Text style={styles.SHtitle2}>Feeling Mad</Text>
+                                                    </View>
+                                                case '😰':
+                                                    return <View style={styles.Lcontainer2}>
+                                                        <Text style={styles.SHtitle2}>Felling Anxious</Text>
+                                                    </View>
 
-                                    <View style={styles.Lcontainer3}>
-                                        <SFSymbol name="arrow.right.square.fill" weight="semibold" color="white" size={18} style={{ width: 42, height: 42 }} />
+                                                case '😲':
+                                                    return <View>
+                                                        <Text style={styles.SHtitle2}>Feeling Shock</Text>
+                                                    </View>
+                                                default:
+                                                    return null
+                                            }
+                                        })()}
                                     </View>
                                 </View>
-                            </Pressable>
+                                <Text style={{ color: colors.white, marginLeft: 70, fontSize: 18 }}>|</Text>
+                                <Text style={{ color: colors.white, marginLeft: 70, fontSize: 18 }}>|</Text>
+
+
+                            </View>
+
                         )}
                     />
+
                 }
+
             </View>
+
 
         </SafeAreaView>
     )
 }
 
-export default React.memo(logCollection);
+export default React.memo(MoodTracker);

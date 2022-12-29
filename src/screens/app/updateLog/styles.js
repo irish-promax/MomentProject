@@ -63,6 +63,7 @@ export const styles = StyleSheet.create({
       backgroundColor:"#B36177",
       height:640,
       borderRadius: 20,
+      marginTop:20
     },
 
     container2:{

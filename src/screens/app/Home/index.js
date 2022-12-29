@@ -36,6 +36,10 @@ const Home = ({ navigation }) => {
         navigation.navigate('Buddy')
     }
 
+    const toMT = () => {
+        navigation.navigate('MT')
+    }
+
     const toCollection = () => {
         navigation.navigate('logC')
     }
@@ -64,6 +68,8 @@ const Home = ({ navigation }) => {
 
             //Get Current Date
             var fullDate = new Date();
+            var stringDate = fullDate.toLocaleString('en-GB');
+            var stringDateOnly = fullDate.toLocaleDateString('en-GB');
 
             //Get Current Date
             var date = new Date().getDate();
@@ -80,16 +86,19 @@ const Home = ({ navigation }) => {
             //Get Current Time Minutes
             var min = new Date().getMinutes();
 
+
             const docRef1 = doc(db, "User", authentication.currentUser.uid,)
             const colRef1 = collection(docRef1, "Mood")
             addDoc(colRef1, {
                 userID: authentication.currentUser.uid,
+                dateString: stringDate,
                 moodLog: option,
                 fDate: fullDate,
                 createdAt: serverTimestamp(),
                 dateLog: date,
                 monthLog: month,
                 yearLog: year,
+                dateonly: stringDateOnly
             });
 
             console.log("Document written with ID: ", docRef1.id);
@@ -100,8 +109,6 @@ const Home = ({ navigation }) => {
             console.error("Error adding document: ", e);
         }
     }
-
-    //labels: ["🥳", "🙁", "🥱", "😡", "😰", "😲"]
 
     //Get Current Month
     var month = new Date().getMonth() + 1;
@@ -117,7 +124,6 @@ const Home = ({ navigation }) => {
     let [isMad, setIsMad] = React.useState();
     let [isWorry, setIsWorry] = React.useState();
     let [isShock, setIsShock] = React.useState();
-
     let [isLoading, setIsLoading] = React.useState(true);
 
     const unsubscribe = onSnapshot(sorted, (querySnapshot) => {
@@ -172,7 +178,7 @@ const Home = ({ navigation }) => {
         <ScrollView>
             <View>
                 <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", marginTop: 50 }}>
-                    <Text style={styles.Htitle1}>Moment 1</Text>
+                    <Text style={styles.Htitle1}>Moment</Text>
                     <View style={{ width: 185 }}></View>
                     <Pressable onPress={onSignOut} hitSlop={20}>
                         <SFSymbol
@@ -304,9 +310,23 @@ const Home = ({ navigation }) => {
                         />
                         <Text style={styles.SHtitle}>Buddy</Text>
                     </Pressable>
+                </View>
 
-                    {/* Calendar button @ Home */}
-
+                <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                    {/* VBuddy button @ Home */}
+                    <Pressable style={styles.container5} hitSlop={20} onPress={toMT} >
+                        <SFSymbol
+                            name="face.smiling.inverse"
+                            weight="semibold"
+                            scale="large"
+                            color="white"
+                            size={25}
+                            resizeMode="center"
+                            multicolor={false}
+                            style={{ width: 42, height: 42 }}
+                        />
+                        <Text style={styles.SHtitle}>Mood</Text>
+                    </Pressable>
                 </View>
 
                 {isLoading ?

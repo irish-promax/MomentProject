@@ -11,7 +11,7 @@ import RadioButton from '../../../components/RadioButton';
 import DatePicker from 'react-native-date-picker'
 import { SFSymbol } from 'react-native-sfsymbols';
 import * as ImagePicker from "react-native-image-picker";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 
 const LogDiary = ({ navigation }) => {
@@ -23,8 +23,7 @@ const LogDiary = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [imageGal, setImageGal] = useState('');
     const [imageCam, setImageCam] = useState('');
-    const [uploadimageCam, setuploadImageCam] = useState('');
-    
+
     //test to push and pull
     //hellollll
 
@@ -62,6 +61,8 @@ const LogDiary = ({ navigation }) => {
             try {
                 //Get Current Date
                 var fullDate = new Date();
+                var stringDate = fullDate.toLocaleString('en-GB');
+                var stringDateOnly = fullDate.toLocaleDateString('en-GB');
 
                 //Get Current Date
                 var date = new Date().getDate();
@@ -93,7 +94,9 @@ const LogDiary = ({ navigation }) => {
                     timeLog_hour: hours,
                     timeLog_min: min,
                     whoLog: authentication.currentUser.email,
-                    createdAt: serverTimestamp()
+                    createdAt: serverTimestamp(),
+                    dateString: stringDate,
+                    dateonly: stringDateOnly
 
                 });
 
@@ -107,6 +110,9 @@ const LogDiary = ({ navigation }) => {
                     dateLog: date,
                     monthLog: month,
                     yearLog: year,
+                    dateString: stringDate,
+                    dateonly: stringDateOnly
+
                 });
 
                 console.log("Document written with ID: ", docRef.id);
@@ -162,13 +168,13 @@ const LogDiary = ({ navigation }) => {
         })
     }
 
-    const openGal = async () => {
+    const openGal = () => {
         const option = {
             mediaType: 'photo',
             quality: 1
         }
 
-        ImagePicker.launchImageLibrary(option, async (res) => {
+        ImagePicker.launchImageLibrary(option, (res) => {
             if (res.didCancel) {
                 console.log("User cancel")
             }
@@ -178,26 +184,59 @@ const LogDiary = ({ navigation }) => {
             }
             else {
 
-                // const r = await fetch(res.assets[0]);
-                // const b = await r.blob();
-
-                //setuploadImageCam(b);
-
                 const data = res.assets[0];
                 setImageGal(data);
+                console.log(data);
 
                 const metadata = {
                     contentType: 'image/jpeg'
                 };
 
                 // Upload file and metadata to the object 'images/mountains.jpg'
-                // const storageRef = ref(storage, 'images/' + data.fileName);
+                const storageRef = ref(storage, 'images/' + data.fileName);
+                const uploadTask = uploadBytesResumable(storageRef, imageGal, metadata);
 
-                // uploadBytes(storageRef, uploadimageCam).then((snapshot) => {
-                //    console.log('Uploaded a blob or file!');
-                //  });
+                console.log(storage, 'images/' + data.fileName);
+                // Listen for state changes, errors, and completion of the upload.
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                        switch (snapshot.state) {
+                            case 'paused':
+                                console.log('Upload is paused');
+                                break;
+                            case 'running':
+                                console.log('Upload is running');
+                                break;
+                        }
+                    },
+                    (error) => {
+                        // A full list of error codes is available at
+                        // https://firebase.google.com/docs/storage/web/handle-errors
+                        switch (error.code) {
+                            case 'storage/unauthorized':
+                                // User doesn't have permission to access the object
+                                break;
+                            case 'storage/canceled':
+                                // User canceled the upload
+                                break;
 
+                            // ...
 
+                            case 'storage/unknown':
+                                // Unknown error occurred, inspect error.serverResponse
+                                break;
+                        }
+                    },
+                    () => {
+                        // Upload completed successfully, now we can get the download URL
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            console.log('File available at', downloadURL);
+                        });
+                    }
+                );
 
             }
         })

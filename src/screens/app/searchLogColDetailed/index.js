@@ -26,7 +26,7 @@ const logCollection = ({ route }) => {
     let loadList = async () => {
         const docRef = doc(db, "User", authentication.currentUser.uid,)
         const colRef = collection(docRef, "Diary")
-        const sorted = await query(colRef, where("monthLog", "==", route.params.paramKey))
+        const sorted = await query(colRef, where("dateonly", "==", route.params.paramKey))
 
         const unsubscribe = onSnapshot(sorted, (querySnapshot) => {
             let loggedEntry = [];
@@ -101,7 +101,7 @@ const logCollection = ({ route }) => {
                                     </View>
 
                                     <View style={styles.Lcontainer3}>
-                                        <Text style={styles.SHtitle2}>{item.dateLog}/{item.monthLog}/{item.yearLog}</Text>
+                                        <Text style={styles.SHtitle2}>{item.dateString}</Text>
                                     </View>
 
                                     <View style={styles.Lcontainer3}>

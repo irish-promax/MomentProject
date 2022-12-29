@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     height: 60,
     flexDirection: "row",
     alignItems: "center",
-    width: 180
+    width: 80
   },
   Lcontainer2: {
     height: 45,
@@ -96,9 +96,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     alignSelf: "center",
-    left:-50,
+    left: -50,
     bottom: -650,
-},
+  },
   Htitle: {
     fontSize: 35,
     textAlign: "center",

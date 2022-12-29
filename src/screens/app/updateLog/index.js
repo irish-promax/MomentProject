@@ -15,7 +15,7 @@ const updateLog = ({ navigation, route }) => {
     const [logDay, setlogDay] = useState('');
     let [isLoading, setIsLoading] = React.useState(true);
     const [logMood, setlogMood] = useState('');
-    
+    const [date, setlogDate] = useState('');
     
     React.useEffect(() => {
         if (isLoading) {
@@ -26,6 +26,7 @@ const updateLog = ({ navigation, route }) => {
                     setlogContent(docData.data().logContent);
                     setlogDay(docData.data().createdAt);
                     setlogMood(docData.data().moodLog);
+                    setlogDate(docData.data().dateString)
                 
                     setIsLoading(false);
                 } else {
@@ -114,12 +115,9 @@ const updateLog = ({ navigation, route }) => {
                                 />
                             </Pressable>
                         </View>
-                        <Text style={styles.SHtitle3}>Loggged on:</Text>
-                        <View style={{ justifyContent: "space-evenly", flexDirection: "row", alignItems: "flex-end", alignContent: "flex-end", marginBottom: 10 }}>
-                            <Text style={styles.SHtitle2}>{logDay.toDate().toLocaleDateString()}</Text>
-                            <Text style={styles.SHtitle2}>{logDay.toDate().toLocaleTimeString()}</Text>
-                            <Text style={styles.SHtitle2}>{logMood}</Text>
-                        </View>
+                        <Text style={{color:colors.white, fontSize:16, marginLeft:10}}>Loggged on:</Text>
+                            <Text style={{marginTop: 10,color:colors.white, fontSize:14, marginLeft:10, fontWeight:"500"}}>{date}</Text>
+                      
 
                         <View style={styles.container1}>
                             <View>

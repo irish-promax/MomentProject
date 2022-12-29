@@ -17,6 +17,7 @@ const logColDetailed = ({ navigation, route }) => {
 
     const [logMood, setlogMood] = useState('');
     const [logContent, setlogContent] = useState('');
+    const [date, setlogDate] = useState('');
 
     const onBack = () => {
         navigation.navigate('logC')
@@ -35,6 +36,7 @@ const logColDetailed = ({ navigation, route }) => {
                     setlogDay(docData.data().createdAt);
                     setlogMood(docData.data().moodLog);
                     setlogContent(docData.data().logContent);
+                    setlogDate(docData.data().dateString)
                     setIsLoading(false);
                 } else {
                     // doc.data() will be undefined in this case
@@ -154,7 +156,8 @@ const logColDetailed = ({ navigation, route }) => {
                                     </Pressable>
                                 </View>
                             </View>
-                            <Text style={styles.SHtitle3}>Loggged on:</Text>
+                            <Text style={{color:colors.white, fontSize:16, marginLeft:10}}>Loggged on:</Text>
+                            <Text style={{marginTop: 10,color:colors.white, fontSize:14, marginLeft:10, fontWeight:"500"}}>{date}</Text>
                             <View style={{ justifyContent: "flex-start", flexDirection: "row", alignItems: "flex-end", alignContent: "flex-end", marginBottom: 10 }}>
 
                             </View>

@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     height: 60,
     flexDirection: "row",
     alignItems: "center",
-    width: 180
+    width: 80
   },
   Lcontainer2: {
     height: 45,
