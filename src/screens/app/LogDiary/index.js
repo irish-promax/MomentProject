@@ -24,6 +24,9 @@ const LogDiary = ({ navigation }) => {
     const [imageGal, setImageGal] = useState('');
     const [imageCam, setImageCam] = useState('');
     const [uploadimageCam, setuploadImageCam] = useState('');
+    
+    //test to push and pull
+
     //Get Current Date
     var date = new Date().getDate();
 
@@ -54,7 +57,6 @@ const LogDiary = ({ navigation }) => {
         if (logTitle == "" || option == "" || logVal == "") {
             alert("You left the form empty\nPlease complete the form.");
         }
-
         else {
             try {
                 //Get Current Date
