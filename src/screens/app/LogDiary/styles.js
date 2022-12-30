@@ -59,13 +59,23 @@ export const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
 
+  SHtitle4: {
+    fontSize: 14,
+    paddingHorizontal: 5,
+    fontWeight: "bold",
+    color: colors.white,
+    justifyContent: "space-evenly",
+    marginRight:50,
+    margin:10
+  },
+
   button: {
 
   },
 
   container1: {
     backgroundColor: "#F0D996",
-    height: 540,
+    height: 500,
     borderRadius: 20,
   },
 
@@ -110,7 +120,7 @@ export const styles = StyleSheet.create({
 
   Log: {
     color: colors.white,
-    height: 370,
+    height: 350,
     width: Dimensions.get('window').width,
     alignSelf: "center",
     backgroundColor: "#F7EAC4",

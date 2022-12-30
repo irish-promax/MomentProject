@@ -12,6 +12,7 @@ import DatePicker from 'react-native-date-picker'
 import { SFSymbol } from 'react-native-sfsymbols';
 import * as ImagePicker from "react-native-image-picker";
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { colors } from '../../../utils/colors';
 
 
 const LogDiary = ({ navigation }) => {
@@ -23,9 +24,7 @@ const LogDiary = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [imageGal, setImageGal] = useState('');
     const [imageCam, setImageCam] = useState('');
-
-    //test to push and pull
-    //hellollll
+    const [journalPromp, setjournalPromp] = useState('Do not know what to write?');
 
     //Get Current Date
     var date = new Date().getDate();
@@ -47,6 +46,48 @@ const LogDiary = ({ navigation }) => {
 
     //Get Current Date
     var fullDate = new Date();
+
+    const mood = [
+        { value: '🥳' },
+        { value: '🙁' },
+        { value: '🥱' },
+        { value: '😡' },
+        { value: '😰' },
+        { value: '😲' },
+    ];
+
+    words = [
+        { text: 'What prayers did God answer?', key: 1 },
+        { text: 'What is an attribute of God you came to know more clearly?', key: 2 },
+        { text: 'What do you appreciate about today?', key: 3 },
+        { text: 'A time you dont want to forget', key: 5 },
+        { text: 'What did you rush or do in a hurry?', key: 6 },
+        { text: 'Best thing about this week so far?', key: 7 },
+        { text: 'What made you feel sick?', key: 8 },
+        { text: 'Tell a story about a summer memory.Tell a story about a summer memory.', key: 9 },
+        { text: 'What was more trouble than it should have been?', key: 10 },
+        { text: 'What will change eventually?', key: 11 },
+        { text: 'Who brings good energy into your life and how?', key: 12 },
+        { text: "What's something from your past that whenever you think of it, you laugh?", key: 13 },
+        { text: "What scares you? Make a list and then go on a walk.", key: 14 },
+        { text: "What brings you joy?", key: 15 },
+        { text: "What was a highlight from last year?", key: 16 },
+        { text: "How can you do more?", key: 17 },
+        { text: "What happened at 10am today?", key: 18 },
+        { text: "Your longest road trip.", key: 19 },
+        { text: "A concert you have been to.", key: 20 },
+        { text: "What is your greatest strength?", key: 21 },
+        { text: "What do you love about your body right now?", key: 21 },
+        { text: "What are you sure of?", key: 22 },
+        { text: "Funniest thing that happened this week.", key: 23 },
+        { text: "What caught you off guard?", key: 24 },
+        { text: "What are you are proud of this month?", key: 25 },
+        { text: "What are you holding onto that you need to let go of?", key: 26 },
+        { text: "Three things you do well.", key: 27 },
+        { text: "Advice you'd give to someone else your age.", key: 28 },
+        { text: "Three of your greatest talents/abilities.", key: 29 },
+        { text: "List movies that make you cry.", key: 30 },
+    ];
 
     const toCollection = (props) => {
         navigation.navigate("logC");
@@ -128,16 +169,6 @@ const LogDiary = ({ navigation }) => {
     const onBack = () => {
         navigation.navigate('Tabs')
     }
-
-    const mood = [
-        { value: '🥳' },
-        { value: '🙁' },
-        { value: '🥱' },
-        { value: '😡' },
-        { value: '😰' },
-        { value: '😲' },
-
-    ];
 
     const toLogCol = () => {
         navigation.navigate('logC')
@@ -242,6 +273,11 @@ const LogDiary = ({ navigation }) => {
         })
     }
 
+    const changeTextValue = () => {
+        const len = words.length;
+        setjournalPromp(words[Math.floor(Math.random() * len)].text)
+    }
+
 
     return (
         <SafeAreaView >
@@ -289,7 +325,7 @@ const LogDiary = ({ navigation }) => {
                     />
                 </Pressable>
             </View>
-            <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+            <ScrollView >
                 <View>
 
                     <View style={{ paddingHorizontal: 15 }} >
@@ -300,39 +336,40 @@ const LogDiary = ({ navigation }) => {
                         </View>
                     </View>
 
+                    <View style={{
+                        backgroundColor: '#324A5F',
+                        flexDirection: 'row',
+                        marginBottom: 20,
+                        marginTop:20,
+                        borderRadius: 20,
+                        height: 70,
+                        
+                        width: Dimensions.get('window').width,
+                        alignSelf: "center", alignContent: "center", alignItems: "center",
 
-                    <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
-                        <View>
-                            {
-
-                                imageGal ?
-                                    <Image
-                                        source={{ uri: imageGal.uri }}
-                                        style={{ borderRadius: 10, width: Dimensions.get('window').width, height: Dimensions.get('window').height, }}
-                                    />
-                                    :
-                                    <View>
-                                        <Pressable style={styles.container3} onPress={openGal}>
-                                            <Text style={styles.SHtitle3}>Select Image</Text>
-                                        </Pressable>
-                                    </View>
-                            }
+                    }}>
+                        <Text style={styles.SHtitle4}>{journalPromp}</Text>
+                        <View style={{ alignSelf: "center", alignContent: "center", alignItems: "center", justifyContent: "space-between", position: 'absolute', right: 12, marginLeft: 10, top: 18, backgroundColor: colors.blue, borderRadius: 10, height: 35, width: 40, paddingTop: 7 }}>
+                            <Pressable onPress={changeTextValue}><SFSymbol
+                                name="arrow.triangle.2.circlepath"
+                                weight="bold"
+                                scale="large"
+                                color="white"
+                                size={16}
+                                resizeMode="center"
+                                multicolor={false}
+                                style={{ width: 20, height: 20 }}
+                            /></Pressable>
                         </View>
                     </View>
+
+
 
 
                 </View>
 
                 <View style={styles.container1}>
-                    <View>
-                        <TextInput
-                            style={styles.title}
-                            value={logTitle}
-                            onChangeText={logTitle => setlogTitle(logTitle)}
-                            placeholder="Summarize you day in one word here..."
-                            placeholderTextColor={"#1E2D2F"}
-                        />
-                    </View>
+
 
                     <View>
                         <TextInput
@@ -359,3 +396,25 @@ const LogDiary = ({ navigation }) => {
     )
 }
 export default React.memo(LogDiary);
+
+
+/*  
+                    <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center", marginBottom: 15 }}>
+                        <View>
+                            {
+
+                                imageGal ?
+                                    <Image
+                                        source={{ uri: imageGal.uri }}
+                                        style={{ borderRadius: 10, width: Dimensions.get('window').width, height: Dimensions.get('window').height, }}
+                                    />
+                                    :
+                                    <View>
+                                        <Pressable style={styles.container3} onPress={openGal}>
+                                            <Text style={styles.SHtitle3}>Select Image</Text>
+                                        </Pressable>
+                                    </View>
+                            }
+                        </View>
+                    </View>
+                    */
