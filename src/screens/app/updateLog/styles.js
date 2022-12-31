@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { colors } from "../../../utils/colors";
 
 export const styles = StyleSheet.create({
@@ -61,7 +61,8 @@ export const styles = StyleSheet.create({
 
     container1:{
       backgroundColor:"#B36177",
-      height:640,
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
       borderRadius: 20,
       marginTop:20
     },
@@ -71,7 +72,7 @@ export const styles = StyleSheet.create({
       borderRadius: 30,
       marginBottom: 15,
       height:50,
-      width:"98%",
+      
       justifyContent:"center",
       alignSelf:"center"
     },
@@ -107,18 +108,17 @@ export const styles = StyleSheet.create({
 
     Log:{
       color: colors.white,
-      height:460,
-      width: 370,
+      width: Dimensions.get('screen').width,
+      height: 500,
       alignSelf:"center",
       backgroundColor:"#C47F91",
       padding:15,
       borderRadius: 20,
       //padding:15,
       paddingTop:18,
-      paddingBottom:20,
+   
       justifyContent:"space-evenly",
       textAlign:"justify"
-      
     },
 
     dateText1:{

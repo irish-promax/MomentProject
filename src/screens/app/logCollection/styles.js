@@ -35,6 +35,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 15,
     marginLeft: 8,
+    position: "absolute",
+    left:0
 
 
   },
@@ -45,13 +47,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     alignSelf: "center",
-
+    position: "absolute",
+    right:8
   },
 
   Lcontainer4: {
     height: 65,
     flexDirection: "row",
     alignItems: "center",
+    
   },
 
   container2: {

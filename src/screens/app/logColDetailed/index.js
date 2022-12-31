@@ -32,7 +32,6 @@ const logColDetailed = ({ navigation, route }) => {
             getDoc(doc(db, "User", authentication.currentUser.uid, "Diary", route.params.paramKey)).then(docData => {
                 if (docData.exists()) {
                     //console.log("Document data:", docData.data());
-                    setlogTitle(docData.data().log_Title);
                     setlogDay(docData.data().createdAt);
                     setlogMood(docData.data().moodLog);
                     setlogContent(docData.data().logContent);
@@ -156,21 +155,24 @@ const logColDetailed = ({ navigation, route }) => {
                                     </Pressable>
                                 </View>
                             </View>
-                            <Text style={{color:colors.white, fontSize:16, marginLeft:10}}>Loggged on:</Text>
-                            <Text style={{marginTop: 10,color:colors.white, fontSize:14, marginLeft:10, fontWeight:"500"}}>{date}</Text>
+
+                            <View style={{
+                                alignContent: "center",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                flexDirection: "row"
+                            }}>
+                                <Text style={{ color: colors.white, fontSize: 16 }}>Loggged on:</Text>
+                                <Text style={{ color: colors.white, fontSize: 14, fontWeight: "500" }}>{date}</Text>
+                                <Text style={styles.SHtitle3}>{logMood}</Text>
+                            </View>
+
                             <View style={{ justifyContent: "flex-start", flexDirection: "row", alignItems: "flex-end", alignContent: "flex-end", marginBottom: 10 }}>
 
                             </View>
 
                             <View style={styles.container}>
                                 <View style={styles.container1}>
-                                    <View style={styles.container3}>
-                                        <Text style={styles.Htitle}>{logTitle}</Text>
-                                        <Text style={styles.SHtitle3}>{logMood}</Text>
-                                    </View>
-
-
-
                                     <ScrollView>
                                         <Text style={styles.SHtitle1}>{logContent}</Text>
                                     </ScrollView>

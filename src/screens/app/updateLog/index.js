@@ -115,21 +115,19 @@ const updateLog = ({ navigation, route }) => {
                                 />
                             </Pressable>
                         </View>
-                        <Text style={{color:colors.white, fontSize:16, marginLeft:10}}>Loggged on:</Text>
-                            <Text style={{marginTop: 10,color:colors.white, fontSize:14, marginLeft:10, fontWeight:"500"}}>{date}</Text>
-                      
-
-                        <View style={styles.container1}>
-                            <View>
-                                <TextInput
-                                    style={styles.title}
-                                    value={logTitle}
-                                    onChangeText={logTitle => setlogTitle(logTitle)}
-                                    placeholder="Summarize you day in one word here..."
-                                    placeholderTextColor={"#1E2D2F"}
-                                />
+                        <View style={{
+                                alignContent: "center",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                flexDirection: "row"
+                            }}>
+                                <Text style={{ color: colors.white, fontSize: 16 }}>Loggged on:</Text>
+                                <Text style={{ color: colors.white, fontSize: 14, fontWeight: "500" }}>{date}</Text>
+                                <Text style={{fontSize: 30 }}>{logMood}</Text>
                             </View>
 
+                        <View style={styles.container1}>
+                           
                             <View>
                                 <TextInput
                                     placeholder="Dear journal..."
@@ -142,7 +140,7 @@ const updateLog = ({ navigation, route }) => {
                                 />
                             </View>
 
-                            <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                            <View style={{ alignSelf: "center", flexDirection: "row", bottom:-30}}>
                                 <SButton onPress={toUpdate} style={styles.button} title='Update to collection →' />
                             </View>
                         </View>

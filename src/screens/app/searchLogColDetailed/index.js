@@ -20,9 +20,6 @@ const logCollection = ({ route }) => {
     let [isRefresh, setIsRefresh] = React.useState(false);
     let [loggedEntry, setloggedEntry] = React.useState([]);
 
-
-    console.log(route.params.paramKey);
-
     let loadList = async () => {
         const docRef = doc(db, "User", authentication.currentUser.uid,)
         const colRef = collection(docRef, "Diary")
@@ -47,7 +44,7 @@ const logCollection = ({ route }) => {
     }
 
     const onBack = () => {
-        navigation.navigate('Tabs')
+        navigation.navigate('logC')
     };
 
     return (
@@ -111,6 +108,8 @@ const logCollection = ({ route }) => {
                             </Pressable>
                         )}
                     />
+
+                   
                 }
             </View>
 

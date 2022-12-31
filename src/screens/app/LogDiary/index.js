@@ -95,7 +95,7 @@ const LogDiary = ({ navigation }) => {
 
     const sendToDB = async () => {
 
-        if (logTitle == "" || option == "" || logVal == "") {
+        if ( option == "" || logVal == "") {
             alert("You left the form empty\nPlease complete the form.");
         }
         else {

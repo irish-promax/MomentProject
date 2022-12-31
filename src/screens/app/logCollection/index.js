@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, Image, Pressable, Text, TextInput, View } from 'react-native';
 import { styles } from './styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,6 +21,7 @@ const logCollection = () => {
     let [loggedEntry, setloggedEntry] = React.useState([]);
     const [open, setOpen] = useState(false);
     const [sdate, setDate] = useState('');
+    const [sdate1, setDate1] = useState('🗓 Select by date');
 
     //Get Current Date
     var fullDate = new Date();
@@ -38,12 +39,17 @@ const logCollection = () => {
                 loggedEntry.push(entry);
             });
 
-            //console.log(loggedEntry);
             setloggedEntry(loggedEntry);
             setIsLoading(false);
             setIsRefresh(false);
+
+            
         });
+
+       
     }
+
+
 
     if (isLoading) {
         loadList();
@@ -60,10 +66,10 @@ const logCollection = () => {
 
     const toSearchbyDate = () => {
         if (sdate == "") {
-            alert("You left the form empty\nPlease complete the form.");
+            alert("You left the form empty\nPlease select date.");
         }
         else {
-            console.log(sdate.toLocaleDateString('en-GB'))
+            
             navigation.navigate("SDate", { paramKey: sdate.toLocaleDateString('en-GB') })
 
         }
@@ -76,10 +82,10 @@ const logCollection = () => {
                 <Header2 onBackPress={onBack} title="Back" />
             </View>
 
-            <View style={{ borderRadius: 30, marginTop: 40, flexDirection: "row", justifyContent: "space-evenly", backgroundColor: "#5E747F", height: 50, width: Dimensions.get('screen').width, alignContent: "center", alignItems: "center" }}>
+            <View style={{ borderRadius: 30, marginTop: 40, margin: 10, flexDirection: "row", justifyContent: "space-evenly", backgroundColor: "#40546E", height: 50,  alignContent: "center", alignItems: "center" }}>
                 <View>
                     <Pressable title="Open" onPress={() => setOpen(true)}>
-                        <Text style={{ fontWeight: "800", color: colors.white }}>🗓 Select by date</Text>
+                        <Text style={{left:-10, fontWeight: "800", color: colors.white }}>{sdate1}</Text>
                     </Pressable>
 
                     <DatePicker
@@ -89,18 +95,19 @@ const logCollection = () => {
                         date={fullDate}
                         maximumDate={new Date()}
                         onConfirm={(sdate) => {
+                            
                             setOpen(false)
+                            setDate1(sdate.toLocaleDateString('en-GB'))
                             setDate(sdate)
                         }}
                         onCancel={() => { setOpen(false) }} />
-                    {console.log('Today: ' + sdate)}
+                    
 
                 </View>
-                <Pressable onPress={toSearchbyDate}>
-                    <SFSymbol name="magnifyingglass.circle.fill" color="white" size={30} style={{ marginLeft: 120, width: 40, height: 20 }} />
+                <Pressable hitSlop={20} onPress={toSearchbyDate}>
+                    <SFSymbol name="magnifyingglass.circle.fill" color="white" size={30} style={{marginLeft:140, left:0}} />
                 </Pressable>
             </View>
-
 
             <View style={{ marginTop: 20, marginBottom: 10, flexDirection: "row", justifyContent: "center" }}>
                 <Text style={styles.SHtitle4}>Drag down to refresh</Text>
@@ -141,11 +148,7 @@ const logCollection = () => {
                                         <Text style={styles.SHtitle3}>{item.moodLog}</Text>
                                     </View>
 
-                                    <View style={styles.Lcontainer1}>
-                                        <Text style={styles.SHtitle2}>{item.log_Title}</Text>
-                                    </View>
-
-                                    <View style={styles.Lcontainer3}>
+                                    <View style={styles.Lcontainer4}>
                                         <Text style={styles.SHtitle2}>{item.dateString}</Text>
                                     </View>
 
