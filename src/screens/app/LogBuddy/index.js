@@ -117,7 +117,7 @@ const LogBuddy = ({ navigation }) => {
                         onChangeText={logtoBuddy => setLogtoBuddy(logtoBuddy)}
                         placeholder="I'm worried because..."
                         placeholderTextColor="white"
-                        numberOfLines={5}
+                        numberOfLines={100}
                         multiline={true}
                     />
                 </View>

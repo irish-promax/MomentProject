@@ -42,11 +42,7 @@ const logCollection = () => {
             setloggedEntry(loggedEntry);
             setIsLoading(false);
             setIsRefresh(false);
-
-            
         });
-
-       
     }
 
 

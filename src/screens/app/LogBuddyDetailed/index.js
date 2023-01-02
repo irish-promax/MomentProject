@@ -36,11 +36,8 @@ const logBuddyDetailed = ({ navigation, route }) => {
                 {
                     text: "Cancel", style: "cancel"
                 }
-
-
             ]
         )
-
     };
 
     const toUpdate = () => {

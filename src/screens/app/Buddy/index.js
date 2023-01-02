@@ -19,8 +19,6 @@ const Buddy = ({ }) => {
     let [loggedEntry, setloggedEntry] = React.useState([]);
 
     let loadList = async () => {
-
-
         const docRef = doc(db, "User", authentication.currentUser.uid,)
         const colRef = collection(docRef, "Buddy")
         const sorted = await query(colRef, orderBy("createdAt", "desc"))
@@ -197,8 +195,10 @@ const Buddy = ({ }) => {
                                                         return null
                                                 }
                                             })()}
+
+                                            
                                             <Text style={styles.SHtitle2}>{item.buddyChar}</Text>
-                                          
+
                                         </View>
 
                                         <View style={{
@@ -206,6 +206,25 @@ const Buddy = ({ }) => {
                                         }}>
 
                                         </View>
+                                        {(() => {
+                                                switch (item.doneWorry) {
+                                                    case 'Done':
+                                                        return <SFSymbol
+                                                        name="person.crop.circle.fill.badge.checkmark"
+                                                        weight="semibold"
+                                                        scale="large"
+                                                        color="white"
+                                                        size={20}
+                                                        resizeMode="center"
+                                                        multicolor={false}
+                                                        style={{right: -200}}
+                                                    />
+
+                                                   
+                                                    default:
+                                                        return null
+                                                }
+                                            })()}
                                     </View>
                                 </Pressable>
                             )}
