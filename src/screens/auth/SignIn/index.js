@@ -18,25 +18,25 @@ const SignIn = ({ navigation }) => {
         if (email == "" || password == "") {
             alert("You left the form empty\nPlease complete the form.");
         }
-        
-        else{
-        signInWithEmailAndPassword(authentication, email, password)
-            .then((re) => {
-                //const user = userCredentials.user;
-                setEmail('');
-                setPass('');
-                setValidatePassword('')
-                navigation.navigate('Tabs');
-                console.log("User: ", email)
-            })
-            .catch((re) => {
-                console.log(re);
-                setEmail('');
-                setPass('');
-                setValidatePassword('')
 
-                alert("Invalid Credential!");
-            })
+        else {
+            signInWithEmailAndPassword(authentication, email, password)
+                .then((re) => {
+                    //const user = userCredentials.user;
+                    setEmail('');
+                    setPass('');
+                    setValidatePassword('')
+                    navigation.navigate('Tabs');
+                    console.log("User: ", email)
+                })
+                .catch((re) => {
+                    console.log(re);
+                    setEmail('');
+                    setPass('');
+                    setValidatePassword('')
+
+                    alert("Invalid Credential!");
+                })
         }
     }
 
@@ -51,6 +51,7 @@ const SignIn = ({ navigation }) => {
                 <Text style={styles.label1}>Sign In</Text>
                 <Text style={styles.label}>Email</Text>
                 <TextInput
+                    returnKeyType='done'
                     style={styles.inputContainer}
                     value={email}
                     onChangeText={text => setEmail(text)}
@@ -59,6 +60,7 @@ const SignIn = ({ navigation }) => {
                 <Text style={styles.label}>Password</Text>
 
                 <TextInput
+                    returnKeyType='done'
                     isPassword
                     style={styles.inputContainer}
                     secureTextEntry={true}

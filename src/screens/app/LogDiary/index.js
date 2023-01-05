@@ -373,6 +373,7 @@ const LogDiary = ({ navigation }) => {
 
                     <View>
                         <TextInput
+                        returnKeyType='done'
                             placeholder="Dear journal..."
                             placeholderTextColor={"#1E2D2F"}
                             numberOfLines={10}

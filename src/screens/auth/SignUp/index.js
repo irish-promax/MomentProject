@@ -55,24 +55,28 @@ const SignUp = ({ navigation }) => {
                 <ScrollView>
                     <Text style={styles.label}>Full Name</Text>
                     <TextInput
+                        returnKeyType='done'
                         style={styles.inputContainer}
                         value={fullname}
                         onChangeText={text => setfullname(text)} />
 
                     <Text style={styles.label}>Email</Text>
                     <TextInput
+                        returnKeyType='done'
                         style={styles.inputContainer}
                         value={email}
                         onChangeText={text => setEmail(text)} />
 
                     <Text style={styles.label}>Username</Text>
                     <TextInput
+                        returnKeyType='done'
                         style={styles.inputContainer}
                         value={username}
                         onChangeText={text => setusername(text)} />
 
                     <Text style={styles.label}>Password</Text>
                     <TextInput
+                        returnKeyType='done'
                         isPassword
                         style={styles.inputContainer}
                         secureTextEntry={true}

@@ -111,6 +111,7 @@ const LogBuddy = ({ navigation }) => {
             <View style={styles.container3}>
                 <View>
                     <TextInput
+                        returnKeyType='done'
                         require
                         style={styles.Log}
                         value={logtoBuddy}
