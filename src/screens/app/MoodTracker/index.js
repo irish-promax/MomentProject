@@ -126,7 +126,7 @@ const MoodTracker = () => {
                                                         <Text style={styles.SHtitle2}>Feeling Mad</Text>
                                                     </View>
                                                 case '😰':
-                                                    return <View style={styles.Lcontainer2}>
+                                                    return<View>
                                                         <Text style={styles.SHtitle2}>Felling Anxious</Text>
                                                     </View>
 
