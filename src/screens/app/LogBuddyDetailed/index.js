@@ -14,6 +14,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
     const [buddy, setBuddy] = useState('');
     const [logDay, setlogDay] = useState('');
     const [worryOf, setworryOf] = useState('');
+    const [date, setlogDate] = useState('');
 
     const onBack = () => {
         navigation.navigate('Buddy')
@@ -66,6 +67,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
                     setBuddy(docData.data().buddyChar);
                     setlogDay(docData.data().createdAt);
                     setworryOf(docData.data().userWorryOf);
+                    setlogDate(docData.data().dateString);
                     setIsLoading(false);
                     console.log("Document found!");
                 } else {
@@ -131,6 +133,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
                             }
                         })()}
                         <Text style={styles.SHtitle2}>{buddy}</Text>
+                        <Text style={styles.SHtitle1}>{date}</Text>
 
                         <View style={{ justifyContent: "flex-start", flexDirection: "row", alignItems: "flex-end", alignContent: "flex-end", marginBottom: 10, alignSelf: "center" }}>
 

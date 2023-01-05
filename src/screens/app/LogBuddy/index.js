@@ -46,6 +46,9 @@ const LogBuddy = ({ navigation }) => {
 
 
     const sendToDB = async () => {
+        var fullDate = new Date();
+        var stringDate = fullDate.toLocaleString('en-GB');
+        var stringDateOnly = fullDate.toLocaleDateString('en-GB');
         try {
             const docRef = doc(db, "User", authentication.currentUser.uid,)
             const colRef = collection(docRef, "Buddy")
@@ -54,7 +57,9 @@ const LogBuddy = ({ navigation }) => {
                 userWorryOf: logtoBuddy,
                 buddyChar: option,
                 whoLog: authentication.currentUser.email,
-                createdAt: serverTimestamp()
+                createdAt: serverTimestamp(),
+                dateString: stringDate,
+                dateonly: stringDateOnly
             });
             console.log("Document written with ID: ", docRef.id);
             navigation.navigate("WD", { paramKey: option });

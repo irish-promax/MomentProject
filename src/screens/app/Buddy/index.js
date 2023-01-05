@@ -196,7 +196,7 @@ const Buddy = ({ }) => {
                                                 }
                                             })()}
 
-                                            
+
                                             <Text style={styles.SHtitle2}>{item.buddyChar}</Text>
 
                                         </View>
@@ -204,12 +204,13 @@ const Buddy = ({ }) => {
                                         <View style={{
                                             flexDirection: "column", alignSelf: "center"
                                         }}>
+                                            <Text style={styles.SHtitle2}>{item.dateString}</Text>
 
                                         </View>
                                         {(() => {
-                                                switch (item.doneWorry) {
-                                                    case 'Done':
-                                                        return <SFSymbol
+                                            switch (item.doneWorry) {
+                                                case 'Done':
+                                                    return <SFSymbol
                                                         name="person.crop.circle.fill.badge.checkmark"
                                                         weight="semibold"
                                                         scale="large"
@@ -217,14 +218,12 @@ const Buddy = ({ }) => {
                                                         size={20}
                                                         resizeMode="center"
                                                         multicolor={false}
-                                                        style={{right: -200}}
+                                                        style={{ right: -50 }}
                                                     />
-
-                                                   
-                                                    default:
-                                                        return null
-                                                }
-                                            })()}
+                                                default:
+                                                    return null
+                                            }
+                                        })()}
                                     </View>
                                 </Pressable>
                             )}
