@@ -21,6 +21,7 @@ import LogBuddyDetailed from './src/screens/app/LogBuddyDetailed'
 import wooryLogged from './src/screens/app/wooryLogged';
 import searchLogColDetailed from './src/screens/app/searchLogColDetailed';
 import MoodTracker from './src/screens/app/MoodTracker';
+import doneBuddy from './src/screens/app/doneBuddy';
 const Stack = createNativeStackNavigator();
 
 const theme = {
@@ -49,6 +50,7 @@ const App = ({ }) => {
           <Stack.Screen name="LBuddy" component={LogBuddy} options={{ headerShown: false }} />
           <Stack.Screen name="WD" component={wooryLogged} options={{ headerShown: false }} />
           <Stack.Screen name="LBD" component={LogBuddyDetailed} options={{ headerShown: false }} />
+          <Stack.Screen name="doneBuddy" component={doneBuddy} options={{ headerShown: false }} />
 
           <Stack.Screen name="MT" component={MoodTracker} options={{ headerShown: false }} />
 

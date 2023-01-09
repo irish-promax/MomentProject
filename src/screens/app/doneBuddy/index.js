@@ -6,31 +6,32 @@ import Button from '../../../components/Buttons';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
-const SLogout = ({ navigation }) => {
+const doneBuddy = ({ navigation }) => {
     const onBack = () => {
-        navigation.navigate('SignIn')
+        navigation.navigate('Buddy')
     }
+
     return (
         <SafeAreaView style={styles.container}>
             <View >
                 <Text style={{
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: '600',
                     color: colors.white,
                     textAlign: 'center',
                     margin: 70,
-                }}>You are now logged out.</Text>
+                }}>Your are done we this worry, We will will continue to worry for you and keep it safe.</Text>
 
             </View>
 
             <Image
                 style={styles.image}
-                source={require('../../../../../MomentProject/src/assets/p5.png')}
+                source={require('../../../../../MomentProject/src/assets/people2.png')}
             />
 
 
             <View >
-                <Button onPress={onBack} title="Back to Log In" />
+                <Button onPress={onBack} title="Back to Buddy List" />
             </View>
 
 
@@ -39,7 +40,7 @@ const SLogout = ({ navigation }) => {
     )
 }
 
-export default React.memo(SLogout);
+export default React.memo(doneBuddy);
 
 /* =========== Reserved Code ===========
 */

@@ -52,7 +52,7 @@ const logBuddyDetailed = ({ navigation, route }) => {
         updateDoc(docRef, data)
             .then(docRef => {
                 console.log("Value of an Existing Document Field has been updated");
-                navigation.navigate("Buddy")
+                navigation.navigate("doneBuddy")
             })
             .catch(error => {
                 console.log(error);
