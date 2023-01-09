@@ -20,7 +20,7 @@ const doneBuddy = ({ navigation }) => {
                     color: colors.white,
                     textAlign: 'center',
                     margin: 70,
-                }}>Your are done we this worry, We will will continue to worry for you and keep it safe.</Text>
+                }}>Your are done with this worry, We will continue to worry for you and keep it safe.</Text>
 
             </View>
 

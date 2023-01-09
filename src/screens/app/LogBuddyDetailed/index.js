@@ -191,6 +191,3 @@ const logBuddyDetailed = ({ navigation, route }) => {
 }
 
 export default React.memo(logBuddyDetailed);
-
-
-

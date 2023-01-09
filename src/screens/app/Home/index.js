@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, ScrollView, Dimensions, ActivityIndicator, Alert } from 'react-native';
 import { styles } from './styles';
 import { authentication, db } from '../../../../firebase-config/firebase';
 import { signOut } from "firebase/auth";
@@ -103,6 +103,7 @@ const Home = ({ navigation }) => {
 
             console.log("Document written with ID: ", docRef1.id);
             console.log("Log Sucessful: ", hours, ":", min);
+            Alert.alert("Mood Saved.");
 
         }
         catch (e) {
@@ -270,11 +271,12 @@ const Home = ({ navigation }) => {
                             name="bookmark.fill"
                             weight="semibold"
                             scale="large"
-                            color="white"
-                            size={22}
+                            color="#C20805"
+                            size={28}
                             resizeMode="center"
                             multicolor={false}
-                            style={{ width: 42, height: 42 }}
+                            style={{
+                                width: 42, height: 42}}
                         />
                         <Text style={styles.SHtitle}>Diary</Text>
                     </Pressable>
@@ -285,8 +287,8 @@ const Home = ({ navigation }) => {
                             name="book.closed.fill"
                             weight="semibold"
                             scale="large"
-                            color="white"
-                            size={22}
+                            color="#3F88C5"
+                            size={28}
                             resizeMode="center"
                             multicolor={false}
                             style={{ width: 42, height: 42 }}
@@ -303,7 +305,7 @@ const Home = ({ navigation }) => {
                             weight="semibold"
                             scale="large"
                             color="white"
-                            size={25}
+                            size={28}
                             resizeMode="center"
                             multicolor={false}
                             style={{ width: 42, height: 42 }}
@@ -319,8 +321,8 @@ const Home = ({ navigation }) => {
                             name="face.smiling.inverse"
                             weight="semibold"
                             scale="large"
-                            color="white"
-                            size={25}
+                            color="#E6AF2E"
+                            size={28}
                             resizeMode="center"
                             multicolor={false}
                             style={{ width: 42, height: 42 }}
