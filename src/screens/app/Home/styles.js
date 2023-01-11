@@ -68,6 +68,7 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         margin: 15,
         marginTop: 20,
+        alignSelf: "center",
         alignContent: "center",
         alignItems: "center",
         flexDirection: "row",

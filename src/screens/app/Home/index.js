@@ -65,6 +65,7 @@ const Home = ({ navigation }) => {
             if (option == "") {
                 alert("No mood where chosen.");
             }
+            else{
 
             //Get Current Date
             var fullDate = new Date();
@@ -106,6 +107,7 @@ const Home = ({ navigation }) => {
             Alert.alert("Mood Saved.");
 
         }
+    }
         catch (e) {
             console.error("Error adding document: ", e);
         }
